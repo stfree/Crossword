@@ -1,7 +1,7 @@
 const path = require("path");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
-  entry: "./src/client/index.js",
+  entry: "./src/client/index.jsx",
   output: {
     path: path.join(__dirname, "/dist"),
     filename: "bundle.js",
@@ -11,10 +11,16 @@ module.exports = {
       template: "./src/client/index.html",
     }),
   ],
+  resolve: {
+    alias: {
+      components: path.resolve(__dirname, "src/client/*"),
+    },
+    extensions: [".js", ".jsx"],
+  },
   module: {
     rules: [
       {
-        test: /.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
@@ -32,5 +38,8 @@ module.exports = {
         use: ["style-loader", "css-loader", "postcss-loader"],
       },
     ],
+  },
+  resolve: {
+    extensions: [".js", ".jsx"],
   },
 };
