@@ -48,6 +48,7 @@
 
 ### Maybe:
 
+- Maybe it makes sense not to colocate test/story files with app files
 - split out eslint rules for both front end and back end
 - prisma (orm)
 - planetscale (mysql db service)
