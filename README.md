@@ -18,3 +18,11 @@
 ### Tests
 
 - yarn test
+
+### Prettier
+
+- yarn prettier
+
+### Lint
+
+- yarn lint
