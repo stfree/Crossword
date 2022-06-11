@@ -16,6 +16,7 @@
 - Setup eslint **DONE**
   - https://eslint.org/docs/user-guide/getting-started
 - Create Test react component **DONE**
+- When public repo is stood up create qa and prod environments (probably in aws);
 
 ---
 
