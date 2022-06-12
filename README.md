@@ -42,7 +42,8 @@
 
 ## Things to Do:
 
-- You guys don't have to do this (i'll do it) becasue juniors aren't expected to set everything up (I guess) but it's good to know how it works (we'll go over it)
+You guys don't have to do this (i'll do it) becasue juniors aren't expected to set everything up but it's good to know how it works (we'll go over it)
+
 - [x] Run npm init to create npm module
   - https://docs.npmjs.com/cli/v8/commands/npm-init
 - [x] Set up basic react/express/babel/webpack app
@@ -64,6 +65,7 @@
 - [x] Add example of jest snapshot test
   - "Instead of rendering the graphical UI, which would require building the entire app, you can use a test renderer to quickly generate a serializable value for your React tree." - Jest Docs
 - [x] Add yarn command to run both majestic and storybook at the same time
+- [ ] Think about name for capstone project
 - [ ] Create public repo (maybe org too)
 - [ ] Lock down main branch of public repo
 - [ ] setup ci for public repo
