@@ -39,7 +39,6 @@
 
 - yarn lint
 
-
 ## Things to Do:
 
 You guys don't have to do this (i'll do it) becasue juniors aren't expected to set everything up but it's good to know how it works (we'll go over it)
@@ -116,6 +115,29 @@ You guys don't have to do this (i'll do it) becasue juniors aren't expected to s
 - Figure out if I'm setting defaultprops values correctly
 
 - Maybe have the path be:
+
   - client sends request -> DAG is update
   - client invokes cell evaluation -> server generates DAG subgraph -> puts either subgraph in queue or stitched up code in queue -> kernal receives request to evaluate -> sends code to microVM -> receives results object -> puts in queue to send back to server -> server receives results -> puts in db -> client subscribed to db via socket connections gets update and slots in results
     - https://github.com/Nozbe/WatermelonDB
+
+- Socket.io pub/sub with redis between client and server
+- Zeromq queue between server and kernel orchestrator
+
+## Back end evaluation of JS code:
+
+- Can we use something like cloudflare workers?
+  - No
+    - "Disadvantages
+      No technology is magical, every transition comes with disadvantages. An Isolate-based system can’t run arbitrary compiled code. Process-level isolation allows your Lambda to spin up any binary it might need. In an Isolate universe you have to either write your code in Javascript (we use a lot of TypeScript), or a language which targets WebAssembly like Go or Rust."
+      - https://blog.cloudflare.com/cloud-computing-without-containers/
+- Here's an interesting idea:
+  - Use docker image but transmogrify it into a Firecracker micro-VMs
+    - https://fly.io/blog/docker-without-docker/
+    - Use a service to do this:
+      - https://hackernoon.com/how-to-deploy-firecracker-microvms-using-weave-firekube-311h3ug1
+      - https://ignite.readthedocs.io/en/stable/usage/
+      - https://github.com/weaveworks/ignite
+      - https://github.com/weaveworks/ignite/blob/main/docs/footloose.md
+      - https://github.com/weaveworks/footloose
+    - Run it on an i3.metal EC2 instance (aws)
+      - https://aws.amazon.com/ec2/instance-types/i3/
