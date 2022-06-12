@@ -3,7 +3,6 @@
 </p>
 
 ## Template for Capstone Project
-
 ---
 
 ### Tools
