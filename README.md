@@ -67,6 +67,8 @@ You guys don't have to do this (i'll do it) becasue juniors aren't expected to s
 - [x] Add yarn command to run both majestic and storybook at the same time
 - [ ] Think about name for capstone project
 - [ ] Create public repo (maybe org too)
+- [ ] Add router (Contributors)
+- [ ] Add state management (maybe?) (Contributors)
 - [ ] Lock down main branch of public repo
 - [ ] setup ci for public repo
 - [ ] When public repo is stood up create qa and prod environments (probably in aws);
