@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center m-4"
+>
+  <div>
+    <div
+      className="text-xl font-medium text-black"
+    >
+      Hello 
+      Shane
+    </div>
+    <p
+      className="text-slate-500"
+    >
+      This is an example component
+    </p>
+  </div>
+</div>
+`;

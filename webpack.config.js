@@ -2,6 +2,7 @@ const path = require("path");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: "./src/client/index.jsx",
+  devtool: "inline-source-map",
   output: {
     path: path.join(__dirname, "/dist"),
     filename: "bundle.js",
