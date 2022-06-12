@@ -109,7 +109,7 @@ You guys don't have to do this (i'll do it) becasue juniors aren't expected to s
 
 ## Notes:
 
-- I've been struggling in choosing between something like nextjs and a more "standard" react/express app where we explicitly setup webpack and babel and import some particular front end router etc. The basic trade off is this: using something like nextjs reduces start up time and makes things easier at the price of conflating front end and back end notions (which might be especially impactful for a novice). Setting up the regular react/express app with a very obvious distinction between the front end and the back comes at the cost of having to manually set up webpack and babel and other tooling. You also have to make more decisions that something like next would make for you. I think i'm just going to eat the cost of that in order to present to you a clearer model of clien/server architecture. That's my thinking on this so far.
+- I've been struggling in choosing between something like nextjs and a more "standard" react/express app where we explicitly setup webpack and babel and import some particular front end router etc. The basic trade off is this: using something like nextjs reduces start up time and makes things easier at the price of conflating front end and back end notions (which might be especially impactful for a novice). Setting up the regular react/express app with a very obvious distinction between the front end and the back comes at the cost of having to manually set up webpack and babel and other tooling. You also have to make more decisions that something like next would make for you. I think i'm just going to eat the cost of that in order to present to you a clearer model of client/server architecture. That's my thinking on this so far.
 
 - Figure out if I'm using child props correctly
 - Figure out if I'm setting defaultprops values correctly
@@ -131,7 +131,7 @@ You guys don't have to do this (i'll do it) becasue juniors aren't expected to s
       No technology is magical, every transition comes with disadvantages. An Isolate-based system can’t run arbitrary compiled code. Process-level isolation allows your Lambda to spin up any binary it might need. In an Isolate universe you have to either write your code in Javascript (we use a lot of TypeScript), or a language which targets WebAssembly like Go or Rust."
       - https://blog.cloudflare.com/cloud-computing-without-containers/
 - Here's an interesting idea:
-  - Use docker image but transmogrify it into a Firecracker micro-VMs
+  - Use docker image but transmogrify it into a Firecracker micro-VM
     - https://fly.io/blog/docker-without-docker/
     - Use a service to do this:
       - https://hackernoon.com/how-to-deploy-firecracker-microvms-using-weave-firekube-311h3ug1
