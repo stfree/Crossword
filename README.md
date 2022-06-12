@@ -39,7 +39,6 @@
 
 - yarn lint
 
----
 
 ## Things to Do:
 
@@ -70,8 +69,6 @@
 - [ ] setup ci for public repo
 - [ ] When public repo is stood up create qa and prod environments (probably in aws);
 
----
-
 ### 3rd Party Libraries
 
 - React Router
@@ -97,8 +94,6 @@
 - ZeroMQ
   - https://zguide.zeromq.org/docs/chapter1/
 
----
-
 ### Maybe:
 
 - Maybe it makes sense not to colocate test/story files with app files
@@ -106,8 +101,6 @@
 - prisma (orm)
 - planetscale (mysql db service)
 - trpc (endpoint typescript validation)
-
----
 
 ### Notes:
 
