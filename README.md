@@ -103,6 +103,8 @@ You guys don't have to do this (i'll do it) becasue juniors aren't expected to s
 - prisma (orm)
 - planetscale (mysql db service)
 - trpc (endpoint typescript validation)
+- https://react-query.tanstack.com/ (for data calls?)
+- https://github.com/pmndrs/jotai (for simple global state, i.e. which cell is active?)
 
 ## Notes:
 
