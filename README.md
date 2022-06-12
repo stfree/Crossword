@@ -130,8 +130,7 @@ You guys don't have to do this (i'll do it) becasue juniors aren't expected to s
 
 - Can we use something like cloudflare workers?
   - No
-    - "Disadvantages
-      No technology is magical, every transition comes with disadvantages. An Isolate-based system can’t run arbitrary compiled code. Process-level isolation allows your Lambda to spin up any binary it might need. In an Isolate universe you have to either write your code in Javascript (we use a lot of TypeScript), or a language which targets WebAssembly like Go or Rust."
+    - "Disadvantages: No technology is magical, every transition comes with disadvantages. An Isolate-based system can’t run arbitrary compiled code. Process-level isolation allows your Lambda to spin up any binary it might need. In an Isolate universe you have to either write your code in Javascript (we use a lot of TypeScript), or a language which targets WebAssembly like Go or Rust."
       - https://blog.cloudflare.com/cloud-computing-without-containers/
 - Here's an interesting idea:
   - Use docker image but transmogrify it into a Firecracker micro-VM
