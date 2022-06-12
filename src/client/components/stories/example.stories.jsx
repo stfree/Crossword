@@ -13,7 +13,6 @@ const Template = (args) => <Welcome {...args} />;
 
 // 👇 Each story then reuses that template
 export const ExampleComponent = Template.bind({});
-console.log(ExampleComponent.args);
 ExampleComponent.args = {
   children: "Shane",
 };

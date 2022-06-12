@@ -1,6 +1,7 @@
 /**
 babel.config.js with useful plugins.
 */
+/* eslint-disable func-names */
 module.exports = function (api) {
   api.cache(true);
   const presets = ["@babel/preset-env", "@babel/preset-react"];
