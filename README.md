@@ -113,5 +113,5 @@ You guys don't have to do this (i'll do it) becasue juniors aren't expected to s
 
 - Maybe have the path be:
   - client sends request -> DAG is update
-  - client invokes cell evaluation -> server generates DAG subgraph -> puts in queue -> kernal recieves request to evaluate -> sends code to microVM -> receives results object -> puts in queue -> server receives results -> puts in db -> client subscribed to db via socket connections gets update and slots in results
+  - client invokes cell evaluation -> server generates DAG subgraph -> puts either subgraph in queue or stitched up code in queue -> kernal receives request to evaluate -> sends code to microVM -> receives results object -> puts in queue to send back to server -> server receives results -> puts in db -> client subscribed to db via socket connections gets update and slots in results
     - https://github.com/Nozbe/WatermelonDB
