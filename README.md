@@ -106,6 +106,12 @@ You guys don't have to do this (i'll do it) becasue juniors aren't expected to s
 - trpc (endpoint typescript validation)
 - https://react-query.tanstack.com/ (for data calls?)
 - https://github.com/pmndrs/jotai (for simple global state, i.e. which cell is active?)
+- Create two packages that will make up the backend DAGification procedure
+- A package to generate the DAG and to incrementally update and produce sub-graphs (this package will be agnostic as to the node/edge generation)
+  - Another package that parses code (invoking @babel/parser)
+  - Use both these on the backend (parse code in cell and then connect cell node to another cell node)
+  - Host them on github packages (via npm)
+    - https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry
 
 ## Notes:
 
