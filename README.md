@@ -117,6 +117,8 @@ You guys don't have to do this (i'll do it) becasue juniors aren't expected to s
 
 - I've been struggling in choosing between something like nextjs and a more "standard" react/express app where we explicitly setup webpack and babel and import some particular front end router etc. The basic trade off is this: using something like nextjs reduces start up time and makes things easier at the price of conflating front end and back end notions (which might be especially impactful for a novice). Setting up the regular react/express app with a very obvious distinction between the front end and the back comes at the cost of having to manually set up webpack and babel and other tooling. You also have to make more decisions that something like next would make for you. I think i'm just going to eat the cost of that in order to present to you a clearer model of client/server architecture. That's my thinking on this so far.
 
+  - Settled on approach
+
 - Maybe have the path be:
 
   - client sends request -> DAG is update
