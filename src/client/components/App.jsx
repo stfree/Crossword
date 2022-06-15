@@ -3,9 +3,10 @@ import Welcome from "./Example";
 
 const CONTRIBUTORS = [
   {
-    name: "Shaneaa",
+    name: "Shane",
     id: 1,
-    message: "This is an example Component",
+    message:
+      "adfdsfdsfdsafsadfdsfdsfdsfdsfdfafdfdsfdsfdsfdfdasfdafdfdasfadsfdsf",
   },
   {
     name: "Spyder",

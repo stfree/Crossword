@@ -4,10 +4,10 @@ import PropTypes from "prop-types";
 function Welcome(props) {
   const { name, message } = props;
   return (
-    <div className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center m-4">
+    <div className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center m-4 text-ellipsis overflow-hidden">
       <div>
-        <div className="text-xl font-medium text-black">Hello {name}</div>
-        <p className="text-slate-500">{message}</p>
+        <div className="text-xl font-medium text-black ">Hello {name}</div>
+        <p className="text-slate-500 ">{message}</p>
       </div>
     </div>
   );
