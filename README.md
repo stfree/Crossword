@@ -91,6 +91,8 @@ You guys don't have to do this (i'll do it) becasue juniors aren't expected to s
   - Either:
     - https://uiwjs.github.io/react-codemirror/ (probably this one)
     - https://github.com/microsoft/monaco-editor
+- Markdown react component
+  - https://playground.lexical.dev/
 - Drag and Drop
   - https://github.com/atlassian/react-beautiful-dnd
   - https://react-beautiful-dnd.netlify.app/?path=/story/single-vertical-list--basic
