@@ -1,12 +1,23 @@
-.main {
+.body {
+  width:auto;
+  display:flex;
+  justify-content: center;
+}
 
+.main {
+display:flex;
+width: auto;
+align-content: center;
+flex-direction: column;
 }
 
 .header {
+  width: 800px;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   padding-bottom: 0px;
+
 
 }
 
@@ -28,7 +39,7 @@
   display: flex;
   justify-content: left;
   align-items: center;
-  width: auto;
+  width: 800px;
   height: 50px;
   background-color: skyblue;
   margin-top: 0px;
@@ -37,16 +48,18 @@
 }
 
 .canvas {
-  width: 800px;
-  height: 800px;
+  width: 804px;
+  height: 804px;
   display: flex;
   justify-content: center;
 
 }
 
 .crossword-grid {
-width:798px;
-height: 800px;
-background-color: whitesmoke;
-border: 2px solid black;
+  width:804px;
+  height: 800px;
+  background-color: whitesmoke;
+  border: 2px solid black;
+  margin: 0px;
+  padding: 0px;
 }
