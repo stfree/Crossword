@@ -51,7 +51,7 @@ flex-direction: column;
   width: 804px;
   height: 804px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
 
 }
 
@@ -62,4 +62,14 @@ flex-direction: column;
   border: 2px solid black;
   margin: 0px;
   padding: 0px;
+}
+
+.cell {
+  display: flex;
+  align-items:center;
+}
+
+.gridNum {
+  color: black;
+  font-size: 14px;
 }
