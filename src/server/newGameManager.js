@@ -11,22 +11,26 @@ function puzzleMapper(puzzle) {
         down: {}
     };
 
-    clueMapper(puzzle.clues.across, "across");
-    clueMapper(puzzle.clues.down, "down");
+    const answers = {
+        across: {},
+        down: {}
+    };
+
+    objectMapper(puzzle.clues.across, clues, "across");
+    objectMapper(puzzle.clues.down, clues, "down");
 
     // accepts array and converts to object using starting num before '.' as key
-    function clueMapper(array, target) {
+    // expected output: { across: {1 : "1. Leaf", 2 : "2. Easter purchase" },
+    //                      down: {1 : "1. Beauty sleep} }
+    function objectMapper(array, objectName, direction) {
         for (let i = 0; i < array.length; i++) {
-            let clueNum = array[i].split(".", 1);
-            clues[target][clueNum] = array[i];
-            // console.log("test", clueNum, array[i]);
+            let numKey = array[i].split(".", 1);
+            objectName[direction][numKey] = array[i];
         }
     }
 
-    //console.log(clues);
-
     const cells = [];
-    // console.log(puzzle);
+    const gridMap = { across: [], down: [] };
 
     for (let i = 0; i < puzzle.grid.length; i++) {
         cells.push({
@@ -39,12 +43,20 @@ function puzzleMapper(puzzle) {
             column: i % puzzle.size.rows,
             acrossMember: null,
             downMember: null,
+            acrossStart: null,
+            downStart: null,
             acrossClue: null,
-            downClue: null
+            downClue: null,
+            acrossAnswer: null,
+            downAnswer: null
         });
     }
 
-    // find acrossMember
+    // find across data
+    let prevAcrossNum = 0;
+    let acrossStart = 0;
+    let acrossAnswer = "";
+    let k = 0;
     for (let i = 0; i < puzzle.size.rows; i++) {
         let acrossNum = puzzle.gridnums[i * 15];
         for (let j = i * 15; j < i * 15 + puzzle.size.cols; j++) {
@@ -52,42 +64,27 @@ function puzzleMapper(puzzle) {
                 acrossNum = cells[j + 1].gridnums;
                 continue;
             }
-            //   console.log("i:" + i, " j:" + j);
+            // find 1st index of new across gridNum
+            if (prevAcrossNum !== acrossNum) {
+                acrossStart = j;
+                let acrossAnswer =
+                    acrossNum + "." + " " + puzzle.answers.across[k];
+                k++;
+                answers.across[acrossNum] = acrossAnswer;
+                prevAcrossNum = acrossNum;
+            }
+
             cells[j].acrossMember = acrossNum;
             cells[j].acrossClue = clues.across[acrossNum];
+            cells[j].acrossStart = acrossStart;
+            cells[j].acrossAnswer = answers.across[acrossNum];
         }
     }
 
-    // if letter is "." (black square) or you're at the end of the line,
-    // update acrossNum
-    //     if (puzzle.grid[i].row > row ) {
-    //         row = puzzle.grid[i].row
-    //         acrossNum = cells[i].gridnums;
-    //     }
-
-    //     if (puzzle.grid[i + 1] === undefined) {
-    //         cells[i].acrossMember = acrossNum;
-    //         continue;
-    //     }
-    //     // when you update acrossNum
-    //     if (cells[i].column === 0 || acrossNum === null) {
-    //         acrossNum = cells[i].gridnums;
-    //     }
-    //     // if you find a ".", reset acrossNum to null
-    //     if (puzzle.grid[i] === ".") {
-    //         acrossNum = null;
-    //         continue;
-    //     }
-    //     cells[i].acrossMember = acrossNum;
-    // }
-
-    // find downMember
-    //            0  ...   15
+    // find down data
     for (let i = 0; i < puzzle.size.cols; i++) {
         let downNum = puzzle.gridnums[i];
         for (let j = i; j + 15 < puzzle.grid.length; j += 15) {
-            //console.log(j)
-
             if (puzzle.grid[j] === ".") {
                 downNum = cells[j + 15].gridnums;
                 continue;
@@ -96,7 +93,7 @@ function puzzleMapper(puzzle) {
             cells[j].downClue = clues.down[downNum];
         }
     }
-    //console.log("inside puzzle mapper function", puzzle);
+    console.log("inside puzzle mapper function", clues, answers);
     return cells;
 }
 

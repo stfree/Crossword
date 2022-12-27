@@ -40,7 +40,9 @@ function GameRoom() {
                     </div>
                 </div>
                 <div className="clue">
-                    <span>{clue}</span>
+                    <span>
+                        <h1>{clue}</h1>
+                    </span>
                 </div>
                 <div className="canvas">
                     <div className="crossword-grid">

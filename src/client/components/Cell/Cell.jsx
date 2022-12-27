@@ -6,9 +6,14 @@ function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
         column,
         letter,
         gridnums,
-        acrossClue,
         acrossMember,
         downMember,
+        acrossStart,
+        downStart,
+        acrossClue,
+        downClue,
+        acrossAnswer,
+        downAnswer,
         focus,
         index
     } = cellData;
@@ -18,10 +23,16 @@ function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
     const x = column * cellSize;
     const y = row * cellSize;
     const fill = letter === "." ? "black" : "white";
-    let direction = true;
 
-    function handleNextClick() {
-        direction === "across" ? "down" : "across";
+    const [direction, setDirection] = useState("acrossMember");
+
+    function handleNextClick(direction) {
+        if (direction === "acrossMember") {
+            direction = "downMember";
+        } else {
+            direction = "acrossMember";
+        }
+        setDirection(direction);
     }
 
     return (
@@ -29,7 +40,11 @@ function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
             onClick={() => {
                 setClue(acrossClue);
                 console.log(acrossClue);
-                setFocusArea(acrossMember);
+                setFocusArea({
+                    index: index,
+                    direction: direction
+                });
+                handleNextClick(direction);
             }}
         >
             <rect
