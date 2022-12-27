@@ -46,7 +46,7 @@ function puzzleMapper(puzzle) {
 
     // find acrossMember
     for (let i = 0; i < puzzle.size.rows; i++) {
-        let acrossNum = puzzle.gridnums[i];
+        let acrossNum = puzzle.gridnums[i * 15];
         for (let j = i * 15; j < i * 15 + puzzle.size.cols; j++) {
             if (puzzle.grid[j] === ".") {
                 acrossNum = cells[j + 1].gridnums;
