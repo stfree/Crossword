@@ -6,6 +6,7 @@ import CreateBoard from "./CreateBoard";
 
 function GameRoom() {
     const [board, setBoard] = useState([]);
+    const [clue, setClue] = useState(["--clues here--"]);
 
     useEffect(() => {
         fetch("/createGame?date=1983-10-10")
@@ -39,11 +40,17 @@ function GameRoom() {
                     </div>
                 </div>
                 <div className="clue">
-                    <span>--Clues here--</span>
+                    <span>{clue}</span>
                 </div>
                 <div className="canvas">
                     <div className="crossword-grid">
-                        {board[0] && <CreateBoard boardData={board} />}
+                        {board[0] && (
+                            <CreateBoard
+                                boardData={board}
+                                setBoardData={setBoard}
+                                setClue={setClue}
+                            />
+                        )}
                     </div>
                 </div>
             </div>

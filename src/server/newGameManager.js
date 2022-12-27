@@ -6,8 +6,27 @@ function getCrosswordData(date) {
 }
 
 function puzzleMapper(puzzle) {
+    const clues = {
+        across: {},
+        down: {}
+    };
+
+    clueMapper(puzzle.clues.across, "across");
+    clueMapper(puzzle.clues.down, "down");
+
+    // accepts array and converts to object using starting num before '.' as key
+    function clueMapper(array, target) {
+        for (let i = 0; i < array.length; i++) {
+            let clueNum = array[i].split(".", 1);
+            clues[target][clueNum] = array[i];
+            // console.log("test", clueNum, array[i]);
+        }
+    }
+
+    //console.log(clues);
+
     const cells = [];
-    console.log(puzzle);
+    // console.log(puzzle);
 
     for (let i = 0; i < puzzle.grid.length; i++) {
         cells.push({
@@ -19,37 +38,51 @@ function puzzleMapper(puzzle) {
             row: Math.floor(i / puzzle.size.rows),
             column: i % puzzle.size.rows,
             acrossMember: null,
-            downMember: null
+            downMember: null,
+            acrossClue: null,
+            downClue: null
         });
     }
 
     // find acrossMember
-    let acrossNum = 0;
-    for (let i = 0; i < puzzle.grid.length; i++) {
-        // if letter is "." (black square) or you're at the end of the line,
-        // update acrossNum
-        if (puzzle.grid[i + 1] === undefined) {
-            cells[i].acrossMember = acrossNum;
-            continue;
+    for (let i = 0; i < puzzle.size.rows; i++) {
+        let acrossNum = puzzle.gridnums[i];
+        for (let j = i * 15; j < i * 15 + puzzle.size.cols; j++) {
+            if (puzzle.grid[j] === ".") {
+                acrossNum = cells[j + 1].gridnums;
+                continue;
+            }
+            //   console.log("i:" + i, " j:" + j);
+            cells[j].acrossMember = acrossNum;
+            cells[j].acrossClue = clues.across[acrossNum];
         }
-        // when you update acrossNum
-        if (cells[i].column === 0 || acrossNum === null) {
-            acrossNum = cells[i].gridnums;
-        }
-        // if you find a ".", reset acrossNum to null
-        if (puzzle.grid[i] === ".") {
-            acrossNum = null;
-            continue;
-        }
-        cells[i].acrossMember = acrossNum;
     }
 
+    // if letter is "." (black square) or you're at the end of the line,
+    // update acrossNum
+    //     if (puzzle.grid[i].row > row ) {
+    //         row = puzzle.grid[i].row
+    //         acrossNum = cells[i].gridnums;
+    //     }
+
+    //     if (puzzle.grid[i + 1] === undefined) {
+    //         cells[i].acrossMember = acrossNum;
+    //         continue;
+    //     }
+    //     // when you update acrossNum
+    //     if (cells[i].column === 0 || acrossNum === null) {
+    //         acrossNum = cells[i].gridnums;
+    //     }
+    //     // if you find a ".", reset acrossNum to null
+    //     if (puzzle.grid[i] === ".") {
+    //         acrossNum = null;
+    //         continue;
+    //     }
+    //     cells[i].acrossMember = acrossNum;
+    // }
+
     // find downMember
-    // iterate from
-    // [0,15,31,46,61,76,91,106,121,136,151,166,181,196]
-    // start from row 0, then row 1, 2, 3
-    // for i ... 15
-    // start from 0, add i+=15 while (i + 15) < grid length
+    //            0  ...   15
     for (let i = 0; i < puzzle.size.cols; i++) {
         let downNum = puzzle.gridnums[i];
         for (let j = i; j + 15 < puzzle.grid.length; j += 15) {
@@ -60,9 +93,10 @@ function puzzleMapper(puzzle) {
                 continue;
             }
             cells[j].downMember = downNum;
+            cells[j].downClue = clues.down[downNum];
         }
     }
-    // console.log("inside puzzle mapper function", cells)
+    //console.log("inside puzzle mapper function", puzzle);
     return cells;
 }
 

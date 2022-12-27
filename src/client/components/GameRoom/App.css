@@ -1,75 +1,62 @@
 .body {
-  width:auto;
-  display:flex;
-  justify-content: center;
+    width: auto;
+    display: flex;
+    justify-content: center;
 }
 
 .main {
-display:flex;
-width: auto;
-align-content: center;
-flex-direction: column;
+    display: flex;
+    width: auto;
+    align-content: center;
+    flex-direction: column;
 }
 
 .header {
-  width: 800px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding-bottom: 0px;
-
-
+    width: 800px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 0px;
 }
 
 .title {
-  display:flex;
-  align-items: center;
-  flex-direction: column;
-  flex-wrap: wrap;
-  font-size:xx-large;
-  font-weight: 700;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    font-size: xx-large;
+    font-weight: 700;
 }
 
 .settings {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 5px;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 5px;
 }
 .clue {
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  width: 800px;
-  height: 50px;
-  background-color: skyblue;
-  margin-top: 0px;
-  margin-bottom: 10px;
-  padding: 10px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 800px;
+    height: 50px;
+    background-color: skyblue;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    padding: 10px;
 }
 
 .canvas {
-  width: 804px;
-  height: 804px;
-  display: flex;
-  justify-content: flex-start;
-
+    width: 804px;
+    height: 804px;
+    display: flex;
+    justify-content: flex-start;
 }
 
 .crossword-grid {
-  width:804px;
-  height: 800px;
-  background-color: whitesmoke;
-  border: 2px solid black;
-  margin: 0px;
-  padding: 0px;
-}
-
-.cell {
-  display: flex;
-  align-items:center;
-}
-
-.gridNum {
-  color: black;
-  font-size: 14px;
+    width: 804px;
+    height: 800px;
+    background-color: whitesmoke;
+    border: 2px solid black;
+    margin: 0px;
+    padding: 0px;
 }
