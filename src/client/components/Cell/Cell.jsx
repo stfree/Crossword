@@ -18,6 +18,11 @@ function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
     const x = column * cellSize;
     const y = row * cellSize;
     const fill = letter === "." ? "black" : "white";
+    let direction = true;
+
+    function handleNextClick() {
+        direction === "across" ? "down" : "across";
+    }
 
     return (
         <g
