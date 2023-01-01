@@ -41,17 +41,20 @@ function puzzleMapper(puzzle) {
             guess: "",
             row: Math.floor(i / puzzle.size.rows),
             column: i % puzzle.size.rows,
-            acrossMember: null,
-            downMember: null,
-            acrossStart: null,
-            downStart: null,
-            acrossClue: null,
-            downClue: null,
-            acrossAnswer: null,
-            downAnswer: null
+            across: {
+                member: null,
+                start: null,
+                clue: null,
+                answer: null
+            },
+            down: {
+                member: null,
+                start: null,
+                clue: null,
+                answer: null
+            }
         });
     }
-
     // find across data
     let prevAcrossNum = 0;
     let acrossStart = 0;
@@ -73,10 +76,10 @@ function puzzleMapper(puzzle) {
                 answers.across[acrossNum] = acrossAnswer;
                 prevAcrossNum = acrossNum;
             }
-            cells[j].acrossMember = acrossNum;
-            cells[j].acrossClue = clues.across[acrossNum];
-            cells[j].acrossStart = acrossStart;
-            cells[j].acrossAnswer = answers.across[acrossNum];
+            cells[j].across.member = acrossNum;
+            cells[j].across.clue = clues.across[acrossNum];
+            cells[j].across.start = acrossStart;
+            cells[j].across.answer = answers.across[acrossNum];
         }
     }
 
@@ -101,10 +104,10 @@ function puzzleMapper(puzzle) {
                 answers.down[downNum] = downAnswer;
                 prevDownNum = downNum;
             }
-            cells[j].downMember = downNum;
-            cells[j].downClue = clues.down[downNum];
-            cells[j].downStart = downStart;
-            cells[j].downAnswer = answers.down[downNum];
+            cells[j].down.member = downNum;
+            cells[j].down.clue = clues.down[downNum];
+            cells[j].down.start = downStart;
+            cells[j].down.answer = answers.down[downNum];
         }
     }
     // console.log("inside puzzle mapper function", clues, answers);

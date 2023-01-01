@@ -6,14 +6,9 @@ function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
         column,
         letter,
         gridnums,
-        acrossMember,
-        downMember,
-        acrossStart,
-        downStart,
+        across,
+        down,
         acrossClue,
-        downClue,
-        acrossAnswer,
-        downAnswer,
         focus,
         index
     } = cellData;
