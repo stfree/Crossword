@@ -57,6 +57,7 @@ function puzzleMapper(puzzle) {
     let acrossStart = 0;
     let acrossAnswer = "";
     let k = 0;
+
     for (let i = 0; i < puzzle.size.rows; i++) {
         let acrossNum = puzzle.gridnums[i * 15];
         for (let j = i * 15; j < i * 15 + puzzle.size.cols; j++) {
@@ -67,13 +68,11 @@ function puzzleMapper(puzzle) {
             // find 1st index of new across gridNum
             if (prevAcrossNum !== acrossNum) {
                 acrossStart = j;
-                let acrossAnswer =
-                    acrossNum + "." + " " + puzzle.answers.across[k];
+                acrossAnswer = puzzle.answers.across[k];
                 k++;
                 answers.across[acrossNum] = acrossAnswer;
                 prevAcrossNum = acrossNum;
             }
-
             cells[j].acrossMember = acrossNum;
             cells[j].acrossClue = clues.across[acrossNum];
             cells[j].acrossStart = acrossStart;
@@ -82,6 +81,11 @@ function puzzleMapper(puzzle) {
     }
 
     // find down data
+    let prevDownNum = 0;
+    let downStart = 0;
+    let downAnswer = "";
+    let m = 0;
+
     for (let i = 0; i < puzzle.size.cols; i++) {
         let downNum = puzzle.gridnums[i];
         for (let j = i; j + 15 < puzzle.grid.length; j += 15) {
@@ -89,12 +93,21 @@ function puzzleMapper(puzzle) {
                 downNum = cells[j + 15].gridnums;
                 continue;
             }
+            // find 1st index of new across gridNum
+            if (prevDownNum !== downNum) {
+                downStart = j;
+                downAnswer = puzzle.answers.down[m];
+                m++;
+                answers.down[downNum] = downAnswer;
+                prevDownNum = downNum;
+            }
             cells[j].downMember = downNum;
             cells[j].downClue = clues.down[downNum];
+            cells[j].downStart = downStart;
+            cells[j].downAnswer = answers.down[downNum];
         }
     }
-    console.log("inside puzzle mapper function", clues, answers);
+    // console.log("inside puzzle mapper function", clues, answers);
     return cells;
 }
-
 exports.getCrosswordData = getCrosswordData;
