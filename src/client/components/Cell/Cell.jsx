@@ -20,6 +20,7 @@ function Cell({
         focus,
         index
     } = cellData;
+    const { position, range } = focusArea;
     const cellPadding = 0;
     const cellSize = 10;
     const cellInner = 10;
@@ -27,16 +28,19 @@ function Cell({
     const y = row * cellSize;
     const fill = letter === "." ? "black" : "white";
     const [direction, setDirection] = useState("across");
-    const [range, setRange] = useState(-1);
+    //    const [range, setRange] = useState(-1);
 
-    function fillCell(letter, index, range) {
+    function fillCell(letter, index) {
         let color = "white";
 
         if (letter === ".") {
             color = "black";
         }
-        if (focusArea[index]) {
-            color = "yellow";
+        if (range && range[index]) {
+            color = "#87CEEB";
+        }
+        if (index === position) {
+            color = "orange";
         }
         return color;
     }
@@ -54,8 +58,11 @@ function Cell({
         <g
             onClick={() => {
                 setClue(cellData[direction].clue);
-                setRange(cellData[direction].focusRange);
-                setFocusArea(cellData[direction].focusRange);
+                //  setRange(cellData[direction].focusRange);
+                setFocusArea({
+                    position: index,
+                    range: cellData[direction].focusRange
+                });
                 console.log(cellData[direction].clue);
                 handleNextClick(direction);
             }}

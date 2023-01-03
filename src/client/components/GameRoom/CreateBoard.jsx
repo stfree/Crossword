@@ -4,7 +4,7 @@ import Cell from "../Cell/Cell";
 import { useState } from "react";
 
 function CreateBoard({ boardData, setBoardData, setClue }) {
-    const [focusArea, setFocusArea] = useState([]);
+    const [focusArea, setFocusArea] = useState({});
 
     console.log(focusArea);
 
