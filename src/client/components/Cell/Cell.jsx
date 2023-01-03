@@ -9,6 +9,7 @@ function Cell({
     key
 }) {
     const {
+        guess,
         row,
         column,
         letter,
@@ -78,21 +79,21 @@ function Cell({
             />
             {gridnums && (
                 <text
-                    x={x + cellPadding * 4 + 0.5}
-                    y={y + cellPadding * 4 + 0.5}
+                    x={x + cellPadding * 4 + 0.4}
+                    y={y + cellPadding * 4 + 0.4}
                     textAnchor="start"
                     dominantBaseline="hanging"
-                    style={{ fontSize: "16%", fill: "Black" }}
+                    style={{ fontSize: "14%", fill: "Black", zIndex: "0" }}
                 >
                     {gridnums}
                 </text>
             )}
             <text
                 x={x + 5}
-                y={y + 5}
+                y={y + 6.5}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                style={{ fontSize: "25%" }}
+                style={{ fontSize: "28%", fontWeight: "100", zIndex: "1" }}
             >
                 {letter}
             </text>

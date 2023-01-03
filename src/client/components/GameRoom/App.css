@@ -1,3 +1,7 @@
+html {
+    background-color: rgb(246, 241, 235);
+}
+
 .body {
     width: auto;
     display: flex;
@@ -24,8 +28,9 @@
     align-items: center;
     flex-direction: column;
     flex-wrap: wrap;
-    font-size: xx-large;
-    font-weight: 700;
+    font-family: Georgia, "Times New Roman", Times, serif sans-serif;
+    font-size: 3em;
+    font-weight: 400;
 }
 
 .settings {
@@ -37,7 +42,6 @@
     display: flex;
     justify-content: left;
     align-items: center;
-    width: 800px;
     height: 50px;
     background-color: skyblue;
     margin-top: 0px;
@@ -59,4 +63,10 @@
     border: 2px solid black;
     margin: 0px;
     padding: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+}
+
+h1 {
+    font-weight: 200;
 }
