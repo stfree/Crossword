@@ -1,11 +1,19 @@
 import { react, useState } from "react";
 
-function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
+function Cell({
+    cellData,
+    setBoardData,
+    setClue,
+    focusArea,
+    setFocusArea,
+    key
+}) {
     const {
         row,
         column,
         letter,
         gridnums,
+        focusRange,
         across,
         down,
         acrossClue,
@@ -19,26 +27,15 @@ function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
     const y = row * cellSize;
     const fill = letter === "." ? "black" : "white";
     const [direction, setDirection] = useState("across");
+    const [range, setRange] = useState(-1);
 
-    function focusRange(focus) {
-        console.log(focus);
-
-        let range = {};
-        let start = focus[direction].start;
-        let end = focus[direction].answer.length;
-        for (let i = start; i < end; i++) {
-            range[i] = true;
-        }
-        return range;
-    }
-
-    function fillCell(letter, index, focusRange) {
+    function fillCell(letter, index, range) {
         let color = "white";
 
         if (letter === ".") {
             color = "black";
         }
-        if (focusRange && focusRange[index]) {
+        if (focusArea[index]) {
             color = "yellow";
         }
         return color;
@@ -57,12 +54,9 @@ function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
         <g
             onClick={() => {
                 setClue(cellData[direction].clue);
-                setFocusArea({
-                    index: index,
-                    [direction]: cellData[direction]
-                });
-                let temp = focusRange(focusArea);
-                console.log(focusArea[direction].clue, temp);
+                setRange(cellData[direction].focusRange);
+                setFocusArea(cellData[direction].focusRange);
+                console.log(cellData[direction].clue);
                 handleNextClick(direction);
             }}
         >
@@ -71,7 +65,7 @@ function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
                 y={y + cellPadding}
                 width={cellInner}
                 height={cellInner}
-                fill={fillCell(letter, index, focusRange)}
+                fill={fillCell(letter, index, range)}
                 stroke="black"
                 strokeWidth={cellSize / 50}
             />

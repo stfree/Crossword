@@ -30,6 +30,7 @@ function CreateBoard({ boardData, setBoardData, setClue }) {
                 {boardData.map((cell) => {
                     return (
                         <Cell
+                            key={cell.index}
                             cellData={cell}
                             setBoardData={setBoardData}
                             setClue={setClue}
