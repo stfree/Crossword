@@ -6,23 +6,17 @@ function getCrosswordData(date) {
 }
 
 function puzzleMapper(puzzle) {
-    const clues = {
-        across: {},
-        down: {}
-    };
+    const answers = { across: {}, down: {} };
 
-    const answers = {
-        across: {},
-        down: {}
-    };
+    const clues = { across: {}, down: {} };
 
-    objectMapper(puzzle.clues.across, clues, "across");
-    objectMapper(puzzle.clues.down, clues, "down");
+    clueMapper(puzzle.clues.across, clues, "across");
+    clueMapper(puzzle.clues.down, clues, "down");
 
     // accepts array and converts to object using starting num before '.' as key
     // expected output: { across: {1 : "1. Leaf", 2 : "2. Easter purchase" },
     //                      down: {1 : "1. Beauty sleep} }
-    function objectMapper(array, objectName, direction) {
+    function clueMapper(array, objectName, direction) {
         for (let i = 0; i < array.length; i++) {
             let numKey = array[i].split(".", 1);
             objectName[direction][numKey] = array[i];
@@ -30,7 +24,6 @@ function puzzleMapper(puzzle) {
     }
 
     const cells = [];
-    const gridMap = { across: [], down: [] };
 
     for (let i = 0; i < puzzle.grid.length; i++) {
         cells.push({
@@ -43,27 +36,42 @@ function puzzleMapper(puzzle) {
             column: i % puzzle.size.rows,
             across: {
                 member: null,
+                focusRange: {},
                 start: null,
                 clue: null,
                 answer: null
             },
             down: {
                 member: null,
+                focusRange: {},
                 start: null,
                 clue: null,
                 answer: null
             }
         });
     }
-    // find across data
+
+    // find across / down data
+    let colSize = puzzle.size.cols;
+    let findFocusRange = function (start, end, countBy) {
+        let indexes = {};
+        for (let i = start; i < end; i += countBy) {
+            indexes[i] = true;
+        }
+        return indexes;
+    };
+
+    // across specific
     let prevAcrossNum = 0;
     let acrossStart = 0;
     let acrossAnswer = "";
-    let k = 0;
+    let acrossAnswerCounter = 0;
+    let focusRangeAcross = {};
 
     for (let i = 0; i < puzzle.size.rows; i++) {
-        let acrossNum = puzzle.gridnums[i * 15];
-        for (let j = i * 15; j < i * 15 + puzzle.size.cols; j++) {
+        let acrossNum = puzzle.gridnums[i * colSize];
+
+        for (let j = i * colSize; j < i * colSize + puzzle.size.cols; j++) {
             if (puzzle.grid[j] === ".") {
                 acrossNum = cells[j + 1].gridnums;
                 continue;
@@ -71,11 +79,17 @@ function puzzleMapper(puzzle) {
             // find 1st index of new across gridNum
             if (prevAcrossNum !== acrossNum) {
                 acrossStart = j;
-                acrossAnswer = puzzle.answers.across[k];
-                k++;
+                acrossAnswer = puzzle.answers.across[acrossAnswerCounter];
+                acrossAnswerCounter++;
                 answers.across[acrossNum] = acrossAnswer;
                 prevAcrossNum = acrossNum;
+                focusRangeAcross = findFocusRange(
+                    acrossStart,
+                    acrossStart + acrossAnswer.length,
+                    1
+                );
             }
+            cells[j].across.focusRange = { ...focusRangeAcross };
             cells[j].across.member = acrossNum;
             cells[j].across.clue = clues.across[acrossNum];
             cells[j].across.start = acrossStart;
@@ -86,31 +100,77 @@ function puzzleMapper(puzzle) {
     // find down data
     let prevDownNum = 0;
     let downStart = 0;
-    let downAnswer = "";
-    let m = 0;
+    let focusRangeDown = {};
+
+    downAnswerMapper(puzzle, cells);
 
     for (let i = 0; i < puzzle.size.cols; i++) {
         let downNum = puzzle.gridnums[i];
-        for (let j = i; j + 15 < puzzle.grid.length; j += 15) {
+        for (let j = i; j + colSize < puzzle.grid.length; j += colSize) {
             if (puzzle.grid[j] === ".") {
-                downNum = cells[j + 15].gridnums;
+                downNum = cells[j + colSize].gridnums;
                 continue;
             }
-            // find 1st index of new across gridNum
+            // find 1st index of new down gridNum
             if (prevDownNum !== downNum) {
                 downStart = j;
-                downAnswer = puzzle.answers.down[m];
-                m++;
-                answers.down[downNum] = downAnswer;
                 prevDownNum = downNum;
+
+                focusRangeDown = findFocusRange(
+                    downStart,
+                    downStart + cells[j].down.answer.length * colSize,
+                    colSize
+                );
             }
+            cells[j].down.focusRange = { ...focusRangeDown };
             cells[j].down.member = downNum;
             cells[j].down.clue = clues.down[downNum];
             cells[j].down.start = downStart;
-            cells[j].down.answer = answers.down[downNum];
         }
     }
-    // console.log("inside puzzle mapper function", clues, answers);
+
     return cells;
 }
+
+// Runs 1 pass on cells to read them as constructed in puzzle.clues
+// e.g. - 1 down, 2 down, 3 down...
+// Uses array map to skip cells it has already read
+function downAnswerMapper(puzzle, cells) {
+    const puzzleCols = puzzle.size.cols;
+    const colMap = new Array(puzzleCols).fill(-1);
+    let answerCounter = 0;
+
+    console.log("cells.length" + cells.length);
+
+    for (let i = 0; i < cells.length; i++) {
+        let col = cells[i].column;
+
+        // IF the last searched index in the column < current index
+        if (colMap[col] < i) {
+            let j = i;
+
+            while (j < cells.length && cells[j].letter !== ".") {
+                cells[j].down.answer = puzzle.answers.down[answerCounter];
+                j += puzzleCols;
+
+                if (j >= cells.length || cells[j].letter === ".") {
+                    answerCounter++;
+                }
+            }
+            colMap[col] = j;
+        }
+    }
+}
+
 exports.getCrosswordData = getCrosswordData;
+
+/*
+
+i ... cells.length
+    go down until you hit letter === "."
+    save how far you went down on ColMap with index
+next col (next i, get col)
+if colMap[col] > i * colSize --> skip
+
+
+*/

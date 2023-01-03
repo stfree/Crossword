@@ -18,8 +18,31 @@ function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
     const x = column * cellSize;
     const y = row * cellSize;
     const fill = letter === "." ? "black" : "white";
-
     const [direction, setDirection] = useState("across");
+
+    function focusRange(focus) {
+        console.log(focus);
+
+        let range = {};
+        let start = focus[direction].start;
+        let end = focus[direction].answer.length;
+        for (let i = start; i < end; i++) {
+            range[i] = true;
+        }
+        return range;
+    }
+
+    function fillCell(letter, index, focusRange) {
+        let color = "white";
+
+        if (letter === ".") {
+            color = "black";
+        }
+        if (focusRange && focusRange[index]) {
+            color = "yellow";
+        }
+        return color;
+    }
 
     function handleNextClick(direction) {
         if (direction === "across") {
@@ -34,11 +57,12 @@ function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
         <g
             onClick={() => {
                 setClue(cellData[direction].clue);
-                console.log(cellData[direction].clue);
                 setFocusArea({
                     index: index,
-                    direction: direction
+                    [direction]: cellData[direction]
                 });
+                let temp = focusRange(focusArea);
+                console.log(focusArea[direction].clue, temp);
                 handleNextClick(direction);
             }}
         >
@@ -47,7 +71,7 @@ function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
                 y={y + cellPadding}
                 width={cellInner}
                 height={cellInner}
-                fill={fillCell(letter, focus)}
+                fill={fillCell(letter, index, focusRange)}
                 stroke="black"
                 strokeWidth={cellSize / 50}
             />
@@ -75,16 +99,6 @@ function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
     );
 }
 
-function fillCell(letter, focus, index, setBoardData) {
-    let color = "white";
-
-    if (letter === ".") {
-        color = "black";
-    }
-    if (focus) {
-        color = "blue";
-    }
-    return color;
-}
+//
 
 export default Cell;
