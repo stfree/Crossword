@@ -1,13 +1,6 @@
 import { react, useState } from "react";
 
-function Cell({
-    cellData,
-    setBoardData,
-    setClue,
-    focusArea,
-    setFocusArea,
-    key
-}) {
+function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
     const {
         guess,
         row,
@@ -46,13 +39,12 @@ function Cell({
         return color;
     }
 
+    function toggleClue(direction) {
+        return direction === "across" ? "down" : "across";
+    }
+
     function handleNextClick(direction) {
-        if (direction === "across") {
-            direction = "down";
-        } else {
-            direction = "across";
-        }
-        setDirection(direction);
+        setDirection(toggleClue(direction));
     }
 
     return (
@@ -77,6 +69,7 @@ function Cell({
                 stroke="black"
                 strokeWidth={cellSize / 50}
             />
+            <polygon points="5 0,10 0,10 5" fill="red"></polygon>
             {gridnums && (
                 <text
                     x={x + cellPadding * 4 + 0.4}
@@ -95,7 +88,7 @@ function Cell({
                 dominantBaseline="middle"
                 style={{ fontSize: "28%", fontWeight: "100", zIndex: "1" }}
             >
-                {letter}
+                {guess}
             </text>
         </g>
     );

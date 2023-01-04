@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { NormalModuleReplacementPlugin } from "webpack";
 import "./App.css";
-import CreateBoard from "./CreateBoard";
+import Board from "./Board";
 
 function GameRoom() {
     const [board, setBoard] = useState([]);
@@ -26,6 +26,18 @@ function GameRoom() {
         console.log(board);
     }, [board]);
 
+    function registerGuess(e, focusCoords) {
+        console.log(e.key, focusCoords);
+        const newBoard = board.map((cell, index) => {
+            if (index === focusCoords.position) {
+                cell.guess = e.key;
+            }
+            return cell;
+        });
+        focusCoords++;
+        setBoard(newBoard);
+    }
+
     return (
         <div className="body">
             <div className="main">
@@ -47,10 +59,11 @@ function GameRoom() {
                 <div className="canvas">
                     <div className="crossword-grid">
                         {board[0] && (
-                            <CreateBoard
+                            <Board
                                 boardData={board}
                                 setBoardData={setBoard}
                                 setClue={setClue}
+                                registerGuess={registerGuess}
                             />
                         )}
                     </div>
@@ -76,6 +89,6 @@ function GameRoom() {
 
 // }
 
-//   <CreateBoard boardData={board}/>}
+//   <Board boardData={board}/>}
 
 export default GameRoom;

@@ -3,7 +3,7 @@ import GameRoom from "./GameRoom";
 import Cell from "../Cell/Cell";
 import { useState } from "react";
 
-function CreateBoard({ boardData, setBoardData, setClue }) {
+function Board({ boardData, setBoardData, setClue, registerGuess }) {
     const [focusArea, setFocusArea] = useState({});
     const [guess, setGuess] = useState();
 
@@ -12,7 +12,13 @@ function CreateBoard({ boardData, setBoardData, setClue }) {
     function enterGuess() {}
 
     return (
-        <div>
+        <div
+            tabIndex={0}
+            role="button"
+            onKeyDown={(e) => {
+                registerGuess(e, focusArea);
+            }}
+        >
             <svg viewBox="0 0 150 150">
                 {boardData.map((cell) => {
                     return (
@@ -27,14 +33,11 @@ function CreateBoard({ boardData, setBoardData, setClue }) {
                     );
                 })}
             </svg>
-            <div contenteditable="true" onKeyDown={(e) => console.log(e)}>
-                Test
-            </div>
         </div>
     );
 }
 
-export default CreateBoard;
+export default Board;
 
 /* click --> you have cell data:
 
