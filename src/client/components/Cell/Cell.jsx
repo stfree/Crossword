@@ -47,17 +47,26 @@ function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
         setDirection(toggleClue(direction));
     }
 
+    function onNewCell() {
+        setClue(cellData[direction].clue);
+        setFocusArea({
+            position: index,
+            range: cellData[direction].focusRange
+        });
+        console.log(cellData[direction].clue);
+    }
+
     return (
         <g
             onClick={() => {
-                setClue(cellData[direction].clue);
-                //  setRange(cellData[direction].focusRange);
+                onNewCell();
+                handleNextClick(direction);
+            }}
+            onKeyDown={() => {
                 setFocusArea({
-                    position: index,
+                    position: index + 1,
                     range: cellData[direction].focusRange
                 });
-                console.log(cellData[direction].clue);
-                handleNextClick(direction);
             }}
         >
             <rect

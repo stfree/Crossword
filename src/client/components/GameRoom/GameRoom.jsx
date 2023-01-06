@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useState } from "react";
 import { NormalModuleReplacementPlugin } from "webpack";
 import "./App.css";
@@ -32,11 +32,22 @@ function GameRoom() {
             if (index === focusCoords.position) {
                 cell.guess = e.key;
             }
+
             return cell;
         });
-        focusCoords++;
         setBoard(newBoard);
     }
+
+    const handleKeyboard = useCallback((event) => {
+        console.log(event);
+    });
+
+    useEffect(() => {
+        document.addEventListener("keydown", handleKeyboard);
+        return () => {
+            document.removeEventListener("keydown", handleKeyboard);
+        };
+    }, [handleKeyboard]);
 
     return (
         <div className="body">
@@ -64,6 +75,7 @@ function GameRoom() {
                                 setBoardData={setBoard}
                                 setClue={setClue}
                                 registerGuess={registerGuess}
+                                onKeyDown={handleKeyboard}
                             />
                         )}
                     </div>
@@ -72,23 +84,5 @@ function GameRoom() {
         </div>
     );
 }
-
-// function setupBoard({setBoard}) {
-//     useEffect( () => {
-//     fetch("/createGame?date=1983-10-10")
-//     .then((data) => {
-//       if (data.status === 304 || data.status === 200) {
-//           data.json().then(({data}) => {
-//             setBoard(data)
-//             // console.log(data[0].gridnums)
-
-//           })
-//       }
-//     }).catch((e) => {console.log(e)})
-//   }, [])
-
-// }
-
-//   <Board boardData={board}/>}
 
 export default GameRoom;

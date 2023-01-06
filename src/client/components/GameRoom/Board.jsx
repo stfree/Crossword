@@ -9,7 +9,12 @@ function Board({ boardData, setBoardData, setClue, registerGuess }) {
 
     console.log(focusArea);
 
-    function enterGuess() {}
+    function nextPosition(coord) {
+        while (boardData[coord].letter === ".") {
+            coord++;
+        }
+        return coord;
+    }
 
     return (
         <div
@@ -17,6 +22,10 @@ function Board({ boardData, setBoardData, setClue, registerGuess }) {
             role="button"
             onKeyDown={(e) => {
                 registerGuess(e, focusArea);
+                setFocusArea({
+                    position: nextPosition(focusArea.position + 1),
+                    range: boardData[focusArea.position + 1].across.focusRange
+                });
             }}
         >
             <svg viewBox="0 0 150 150">
