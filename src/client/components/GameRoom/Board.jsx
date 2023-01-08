@@ -16,6 +16,10 @@ function Board({ boardData, setBoardData, setClue, registerGuess }) {
         return coord;
     }
 
+    function nextRange(focusArea) {
+        return boardData[focusArea.position].across.focusRange;
+    }
+
     return (
         <div
             tabIndex={0}
@@ -24,7 +28,7 @@ function Board({ boardData, setBoardData, setClue, registerGuess }) {
                 registerGuess(e, focusArea);
                 setFocusArea({
                     position: nextPosition(focusArea.position + 1),
-                    range: boardData[focusArea.position + 1].across.focusRange
+                    range: nextRange(focusArea)
                 });
             }}
         >
