@@ -81,6 +81,8 @@ function puzzleMapper(puzzle) {
     let acrossAnswerCounter = 0;
     let focusRangeAcross = {};
     let prevValidCell = 0;
+    let newPrevValidCell = 0;
+    let nextValidCell = 0;
 
     for (let i = 0; i < puzzle.size.rows; i++) {
         let acrossNum = puzzle.gridnums[i * colSize];
@@ -91,7 +93,7 @@ function puzzleMapper(puzzle) {
                     puzzle.grid[j + 1] === "." ||
                     cells[j].column === colSize - 1
                 ) {
-                    prevValidCell = j;
+                    newPrevValidCell = j;
                 }
             }
             if (puzzle.grid[j] === ".") {
@@ -100,6 +102,7 @@ function puzzleMapper(puzzle) {
             }
             // find 1st index of new across gridNum
             if (prevAcrossNum !== acrossNum) {
+                cells[prevValidCell].across.next = j;
                 acrossStart = j;
                 acrossAnswer = puzzle.answers.across[acrossAnswerCounter];
                 acrossAnswerCounter++;
@@ -112,11 +115,14 @@ function puzzleMapper(puzzle) {
                 );
             }
             cells[j].across.prev = prevValidCell;
+            //cells[j].across.next = nextValidCell;
             cells[j].across.focusRange = { ...focusRangeAcross };
             cells[j].across.member = acrossNum;
             cells[j].across.clue = clues.across[acrossNum];
             cells[j].across.start = acrossStart;
             cells[j].across.answer = answers.across[acrossNum];
+
+            prevValidCell = newPrevValidCell;
         }
     }
 
@@ -162,6 +168,7 @@ function downAnswerMapper(puzzle, cells) {
     const puzzleCols = puzzle.size.cols;
     const colMap = new Array(puzzleCols).fill(-1);
     let answerCounter = 0;
+    let prevValidDown = 0;
 
     console.log("cells.length" + cells.length);
 
@@ -174,9 +181,17 @@ function downAnswerMapper(puzzle, cells) {
 
             while (j < cells.length && cells[j].letter !== ".") {
                 cells[j].down.answer = puzzle.answers.down[answerCounter];
+                cells[j].down.prev = prevValidDown;
+
+                if (i === j) {
+                    cells[prevValidDown].down.next = j;
+                }
+
                 j += puzzleCols;
 
+                // check if it's the end of the word
                 if (j >= cells.length || cells[j].letter === ".") {
+                    prevValidDown = j - puzzleCols;
                     answerCounter++;
                 }
             }
