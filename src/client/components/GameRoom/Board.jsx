@@ -25,6 +25,11 @@ function Board({ boardData, setBoardData, setClue, registerGuess }) {
             tabIndex={0}
             role="button"
             onKeyDown={(e) => {
+                if (e.key.toUpperCase() === "BACKSPACE") {
+                    e.key = "";
+                    registerGuess(e, focusArea);
+                }
+
                 if (e.key.toUpperCase().match(/^[A-Z]$/)) {
                     registerGuess(e, focusArea);
                     let next = nextPosition(focusArea.position + 1);
