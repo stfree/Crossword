@@ -25,12 +25,14 @@ function Board({ boardData, setBoardData, setClue, registerGuess }) {
             tabIndex={0}
             role="button"
             onKeyDown={(e) => {
-                registerGuess(e, focusArea);
-                let next = nextPosition(focusArea.position + 1);
-                setFocusArea({
-                    position: next,
-                    range: boardData.cells[next].across.focusRange
-                });
+                if (e.key.toUpperCase().match(/^[A-Z]$/)) {
+                    registerGuess(e, focusArea);
+                    let next = nextPosition(focusArea.position + 1);
+                    setFocusArea({
+                        position: next,
+                        range: boardData.cells[next].across.focusRange
+                    });
+                }
             }}
         >
             <svg viewBox="0 0 150 150">

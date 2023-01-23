@@ -30,7 +30,7 @@ function GameRoom() {
         console.log(e.key, focusCoords);
         const newBoard = board.cells.map((cell, index) => {
             if (index === focusCoords.position) {
-                cell.guess = e.key;
+                cell.guess = e.key.toUpperCase();
             }
 
             return cell;
