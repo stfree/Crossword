@@ -26,9 +26,10 @@ function Board({ boardData, setBoardData, setClue, registerGuess }) {
             role="button"
             onKeyDown={(e) => {
                 registerGuess(e, focusArea);
+                let next = nextPosition(focusArea.position + 1);
                 setFocusArea({
-                    position: nextPosition(focusArea.position + 1),
-                    range: nextRange(focusArea)
+                    position: next,
+                    range: boardData.cells[next].across.focusRange
                 });
             }}
         >
