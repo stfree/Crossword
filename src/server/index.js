@@ -16,12 +16,12 @@ app.use(express.static("public"));
 //   res.json({data:MOCK_DATA});
 // });
 
-app.get("/createGame", (req, res) => {
-    const { date } = req.query;
-    if (date !== undefined) {
-        res.json({ data: getCrosswordData(date) });
-    }
-});
+// app.get("/createGame", (req, res) => {
+//     const { date } = req.query;
+//     if (date !== undefined) {
+//         res.json({ data: getCrosswordData(date) });
+//     }
+// });
 
 app.get("/createGame", (req, res) => {
     const { date } = req.query;

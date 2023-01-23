@@ -16,6 +16,8 @@ function clueMapper(clues) {
     }, {});
 }
 
+function clueArray() {}
+
 function puzzleMapper(puzzle) {
     // setup clue list
     const {
@@ -26,11 +28,12 @@ function puzzleMapper(puzzle) {
     } = puzzle;
 
     // setup answer list
-    const answers = { across: {}, down: {} };
+    const crossword = {};
+    crossword.answers = { across: {}, down: {} };
 
-    const clues = { across: {}, down: {} };
-    clues.across = clueMapper(across);
-    clues.down = clueMapper(down);
+    crossword.clues = { across: {}, down: {} };
+    crossword.clues.across = clueMapper(across);
+    crossword.clues.down = clueMapper(down);
 
     const cells = [];
 
@@ -106,7 +109,7 @@ function puzzleMapper(puzzle) {
                 acrossStart = j;
                 acrossAnswer = puzzle.answers.across[acrossAnswerCounter];
                 acrossAnswerCounter++;
-                answers.across[acrossNum] = acrossAnswer;
+                crossword.answers.across[acrossNum] = acrossAnswer;
                 prevAcrossNum = acrossNum;
                 focusRangeAcross = findFocusRange(
                     acrossStart,
@@ -118,9 +121,9 @@ function puzzleMapper(puzzle) {
             //cells[j].across.next = nextValidCell;
             cells[j].across.focusRange = { ...focusRangeAcross };
             cells[j].across.member = acrossNum;
-            cells[j].across.clue = clues.across[acrossNum];
+            cells[j].across.clue = crossword.clues.across[acrossNum];
             cells[j].across.start = acrossStart;
-            cells[j].across.answer = answers.across[acrossNum];
+            cells[j].across.answer = crossword.answers.across[acrossNum];
 
             prevValidCell = newPrevValidCell;
         }
@@ -153,12 +156,15 @@ function puzzleMapper(puzzle) {
             }
             cells[j].down.focusRange = { ...focusRangeDown };
             cells[j].down.member = downNum;
-            cells[j].down.clue = clues.down[downNum];
+            cells[j].down.clue = crossword.clues.down[downNum];
             cells[j].down.start = downStart;
         }
     }
+    crossword.cells = cells;
+    crossword.clueArrayAcross = puzzle.clues.across;
+    crossword.clueArrayDown = puzzle.clues.down;
 
-    return cells;
+    return crossword;
 }
 
 // Runs 1 pass on cells to read them as constructed in puzzle.clues

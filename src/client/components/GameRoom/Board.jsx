@@ -10,14 +10,14 @@ function Board({ boardData, setBoardData, setClue, registerGuess }) {
     console.log(focusArea);
 
     function nextPosition(coord) {
-        while (boardData[coord].letter === ".") {
+        while (boardData.cells[coord].letter === ".") {
             coord++;
         }
         return coord;
     }
 
     function nextRange(focusArea) {
-        return boardData[focusArea.position].across.focusRange;
+        return boardData.cells[focusArea.position].across.focusRange;
     }
 
     return (
@@ -33,7 +33,7 @@ function Board({ boardData, setBoardData, setClue, registerGuess }) {
             }}
         >
             <svg viewBox="0 0 150 150">
-                {boardData.map((cell) => {
+                {boardData.cells.map((cell) => {
                     return (
                         <Cell
                             key={cell.index}
@@ -51,40 +51,3 @@ function Board({ boardData, setBoardData, setClue, registerGuess }) {
 }
 
 export default Board;
-
-/* click --> you have cell data:
-
-            index: i, // debug
-            gridnums: puzzle.gridnums[i],
-            letter: puzzle.grid[i],
-            focus: false,
-            guess: "",
-            row: Math.floor(i / puzzle.size.rows),
-            column: i % puzzle.size.rows,
-            acrossMember: null,
-            downMember: null,
-            acrossClue: null,
-            downClue: null
-
-create map of across clues
-
-{
-    1: [0,1,2,3,4]
-    2: [5,6,7,8,9]
-    3: [11,12,14]
-}
-pull acrossMember from cell as key, iterate through array values to change the focus to true
-if focus = true,
-
-boardData.map((element, targetIndex) => {
-    if (element.index === targetIndex) {
-        return
-    }
-})
-
-
-
-
-
-
-*/
