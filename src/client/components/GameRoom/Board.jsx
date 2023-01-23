@@ -16,6 +16,16 @@ function Board({ boardData, setBoardData, setClue, registerGuess }) {
         return coord;
     }
 
+    function prevPosition(coord) {
+        if (coord <= 0) {
+            return 0;
+        }
+        while (boardData.cells[coord].letter === ".") {
+            coord--;
+        }
+        return coord;
+    }
+
     function nextRange(focusArea) {
         return boardData.cells[focusArea.position].across.focusRange;
     }
@@ -28,6 +38,11 @@ function Board({ boardData, setBoardData, setClue, registerGuess }) {
                 if (e.key.toUpperCase() === "BACKSPACE") {
                     e.key = "";
                     registerGuess(e, focusArea);
+                    let prev = prevPosition(focusArea.position - 1);
+                    setFocusArea({
+                        position: prev,
+                        range: boardData.cells[prev].across.focusRange
+                    });
                 }
 
                 if (e.key.toUpperCase().match(/^[A-Z]$/)) {
