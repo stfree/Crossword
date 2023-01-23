@@ -59,8 +59,10 @@ function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
     return (
         <g
             onClick={() => {
-                onNewCell();
-                handleNextClick(direction);
+                if (letter !== ".") {
+                    onNewCell();
+                    handleNextClick(direction);
+                }
             }}
             onKeyDown={() => {
                 setFocusArea({
