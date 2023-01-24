@@ -7,6 +7,7 @@ import Board from "./Board";
 function GameRoom() {
     const [board, setBoard] = useState([]);
     const [clue, setClue] = useState(["--clues here--"]);
+    const [focusArea, setFocusArea] = useState({});
 
     useEffect(() => {
         fetch("/createGame?date=1983-10-10")
@@ -26,18 +27,6 @@ function GameRoom() {
         console.log(board);
     }, [board]);
 
-    function registerGuess(e, focusCoords) {
-        console.log(e.key, focusCoords);
-        const newBoard = board.cells.map((cell, index) => {
-            if (index === focusCoords.position) {
-                cell.guess = e.key.toUpperCase();
-            }
-
-            return cell;
-        });
-        setBoard({ ...board, cells: newBoard });
-    }
-
     const handleKeyboard = useCallback((event) => {
         console.log(event);
     });
@@ -48,6 +37,57 @@ function GameRoom() {
             document.removeEventListener("keydown", handleKeyboard);
         };
     }, [handleKeyboard]);
+
+    function registerGuess(e, focusArea) {
+        console.log(e.key, focusArea);
+
+        if (e.key.toUpperCase() === "BACKSPACE") {
+            e.key = "";
+            processGuess(e, focusArea);
+            let prev = prevPosition(focusArea.position - 1);
+            setFocusArea({
+                position: prev,
+                range: board.cells[prev].across.focusRange
+            });
+        }
+
+        if (e.key.toUpperCase().match(/^[A-Z]$/)) {
+            processGuess(e, focusArea);
+            let next = nextPosition(focusArea.position + 1);
+            setFocusArea({
+                position: next,
+                range: board.cells[next].across.focusRange
+            });
+        }
+    }
+
+    function processGuess(e, focusCoords) {
+        const newBoard = board.cells.map((cell, index) => {
+            if (index === focusCoords.position) {
+                cell.guess = e.key.toUpperCase();
+            }
+
+            return cell;
+        });
+        setBoard({ ...board, cells: newBoard });
+    }
+
+    function nextPosition(coord) {
+        while (board.cells[coord].letter === ".") {
+            coord++;
+        }
+        return coord;
+    }
+
+    function prevPosition(coord) {
+        if (coord <= 0) {
+            return 0;
+        }
+        while (board.cells[coord].letter === ".") {
+            coord--;
+        }
+        return coord;
+    }
 
     return (
         <div className="body">
@@ -76,6 +116,8 @@ function GameRoom() {
                                 setClue={setClue}
                                 registerGuess={registerGuess}
                                 onKeyDown={handleKeyboard}
+                                focusArea={focusArea}
+                                setFocusArea={setFocusArea}
                             />
                         )}
                     </div>
