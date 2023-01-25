@@ -6292,7 +6292,6 @@ __metadata:
     react-test-renderer: ^18.1.0
     style-loader: ^3.3.1
     tailwindcss: ^3.1.2
-    wach: ^3.0.0
     webpack: ^5.73.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.9.2
@@ -12235,15 +12234,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:>=0.0.5":
-  version: 6.1.6
-  resolution: "minimatch@npm:6.1.6"
-  dependencies:
-    brace-expansion: ^2.0.1
-  checksum: 707b026e0adc610be6c02f24173d84811e5b8cc2e434881e47ef00a72be5fbea9323b7158d7bf065782b1e1d5c50d7d80cd72f2602255f2fddfb1d2f02e9092c
-  languageName: node
-  linkType: hard
-
 "minimatch@npm:^3.0.2, minimatch@npm:^3.0.4, minimatch@npm:^3.1.1, minimatch@npm:^3.1.2":
   version: 3.1.2
   resolution: "minimatch@npm:3.1.2"
@@ -17382,29 +17372,6 @@ __metadata:
   version: 1.1.2
   resolution: "vm-browserify@npm:1.1.2"
   checksum: 10a1c50aab54ff8b4c9042c15fc64aefccce8d2fb90c0640403242db0ee7fb269f9b102bdb69cfb435d7ef3180d61fd4fb004a043a12709abaf9056cfd7e039d
-  languageName: node
-  linkType: hard
-
-"wach@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "wach@npm:3.0.0"
-  dependencies:
-    minimatch: ">=0.0.5"
-    wachdir: ~0.1.0
-  bin:
-    wach: ./bin/wach
-    wachs: ./bin/wachs
-  checksum: ae313645bd5f462aa68808b0e4c14be85d720c2746a48a350482a4a7ef17c0d5c636d8905ea86b1edd8cb539bf4a3efc76e53cbf368fb5ebb89e7402b544c9af
-  conditions: os=darwin
-  languageName: node
-  linkType: hard
-
-"wachdir@npm:~0.1.0":
-  version: 0.1.1
-  resolution: "wachdir@npm:0.1.1"
-  bin:
-    wachdir: wachdir
-  checksum: fcb227505cb59aa3c41f6902401e699135bc958473eb057cb39e399c4a730134ae162f70cff9480b9dc9c4c08055d09ecf6e75af3bb3a4ccb789a55b857bddee
   languageName: node
   linkType: hard
 
