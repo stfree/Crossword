@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 const getIndex = (row, width, col) => row * width + col;
 
 function scanClueCells(start, clueLength, colSize, direction) {
@@ -118,7 +119,6 @@ function generateCellsObjectArray(
                 acrossAnswersArray,
                 acrossCluesArray
             );
-
             populateMemberObject(
                 cells,
                 gridnums[index],
@@ -134,7 +134,6 @@ function generateCellsObjectArray(
     });
 }
 
-/* eslint-disable no-param-reassign */
 function clueMapper(clues) {
     return clues.reduce((accum, cur, index) => {
         const [num, clue] = cur.split(".");
@@ -144,7 +143,6 @@ function clueMapper(clues) {
 }
 
 const puzzleMapper = (puzzle) => ({
-    answers: { across: {}, down: {} },
     clueArrayAcross: puzzle.clues.across,
     clueArrayDown: puzzle.clues.down,
     clues: {
