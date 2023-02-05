@@ -1,4 +1,4 @@
-import { react, useState } from "react";
+import { React, useState } from "react";
 
 function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
     const {
@@ -12,7 +12,8 @@ function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
         down,
         acrossClue,
         focus,
-        index
+        index,
+        downMember
     } = cellData;
     const { position, range } = focusArea;
     const cellPadding = 0;

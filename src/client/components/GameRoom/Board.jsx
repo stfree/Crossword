@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { React } from "react";
 import GameRoom from "./GameRoom";
 import Cell from "../Cell/Cell";
 import { useState } from "react";
@@ -11,14 +11,12 @@ function Board({
     focusArea,
     setFocusArea
 }) {
-    //    console.log(focusArea);
-
     return (
         <div
             tabIndex={0}
             role="button"
             onKeyDown={(e) => {
-                registerGuess(e, focusArea);
+                registerGuess(e, focusArea); // callback function to update state in GameRoom
             }}
         >
             <svg viewBox="0 0 150 150">
