@@ -22,12 +22,12 @@ function scanClueCells(start, clueLength, colSize, direction) {
 
 function getNextClueCellIndex(currentMember, clueMap, clueArray) {
     const nextClue = clueArray[clueMap[currentMember].index + 1];
-    return nextClue ? nextClue.split(".")[0] : undefined;
+    return nextClue ? Number(nextClue.split(".")[0]) : undefined;
 }
 
 function getPreviousClueCellIndex(currentMember, clueMap, clueArray) {
     const nextClue = clueArray[clueMap[currentMember].index - 1];
-    return nextClue ? nextClue.split(".")[0] : undefined;
+    return nextClue ? Number(nextClue.split(".")[0]) : undefined;
 }
 
 /* eslint-disable no-param-reassign */
@@ -147,6 +147,7 @@ function clueMapper(clues) {
 
 // start here
 const puzzleMapper = (puzzle) => ({
+    size: puzzle.size,
     answers: { across: {}, down: {} },
     clueArrayAcross: puzzle.clues.across,
     clueArrayDown: puzzle.clues.down,

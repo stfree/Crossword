@@ -1,18 +1,22 @@
-import { React, useState } from "react";
+import { React } from "react";
 
-function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
+function Cell({
+    cellData,
+    setBoardData,
+    setClue,
+    focusArea,
+    setFocusArea,
+    direction,
+    setDirection
+}) {
     const {
         guess,
         row,
         column,
         letter,
         gridnums,
-        focusRange,
-        across,
-        down,
-        acrossClue,
-        focus,
         index,
+        acrossMember,
         downMember
     } = cellData;
     const { position, range } = focusArea;
@@ -21,17 +25,18 @@ function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
     const cellInner = 10;
     const x = column * cellSize;
     const y = row * cellSize;
-    const fill = letter === "." ? "black" : "white";
-    const [direction, setDirection] = useState("across");
-    //    const [range, setRange] = useState(-1);
 
-    function fillCell(letter, index) {
+    function fillCell() {
         let color = "white";
 
         if (letter === ".") {
             color = "black";
         }
-        if (range && range[index]) {
+        if (direction === "across" && cellData.acrossMember === range) {
+            // acrossMember doesn't work, but cellData.acrossMember does ??
+            color = "#87CEEB";
+        }
+        if (direction === "down" && cellData.downMember === range) {
             color = "#87CEEB";
         }
         if (index === position) {
@@ -40,21 +45,26 @@ function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
         return color;
     }
 
-    function toggleClue(direction) {
+    function toggleClue() {
         return direction === "across" ? "down" : "across";
     }
 
-    function handleNextClick(direction) {
-        setDirection(toggleClue(direction));
+    function handleNextClick() {
+        setDirection(toggleClue());
     }
 
     function onNewCell() {
-        setClue(cellData[direction].clue);
+        setClue(
+            direction === "across" ? cellData.acrossClue : cellData.downClue
+        );
+        const newRange =
+            direction === "across"
+                ? cellData.acrossMember
+                : cellData.downMember;
         setFocusArea({
             position: index,
-            range: cellData[direction].focusRange
+            range: newRange
         });
-        console.log(cellData[direction].clue);
     }
 
     return (
@@ -62,15 +72,21 @@ function Cell({ cellData, setBoardData, setClue, focusArea, setFocusArea }) {
             onClick={() => {
                 if (letter !== ".") {
                     onNewCell();
-                    handleNextClick(direction);
+                    handleNextClick();
+                    console.log(
+                        cellData.index,
+                        cellData[`${direction}Member`],
+                        direction
+                    );
                 }
             }}
-            onKeyDown={() => {
-                setFocusArea({
-                    position: index + 1,
-                    range: cellData[direction].focusRange
-                });
-            }}
+            // onKeyDown={() => {
+            //     setFocusArea({
+            //         position: index + 1,
+            //         range: cellData.acrossMember
+            //         // range: cellData[direction].focusRange
+            //     });
+            // }}
         >
             <rect
                 x={x + cellPadding}

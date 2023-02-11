@@ -1,7 +1,6 @@
 import { React } from "react";
 import GameRoom from "./GameRoom";
 import Cell from "../Cell/Cell";
-import { useState } from "react";
 
 function Board({
     boardData,
@@ -9,7 +8,9 @@ function Board({
     setClue,
     registerGuess,
     focusArea,
-    setFocusArea
+    setFocusArea,
+    direction,
+    setDirection
 }) {
     return (
         <div
@@ -29,6 +30,8 @@ function Board({
                             setClue={setClue}
                             focusArea={focusArea}
                             setFocusArea={setFocusArea}
+                            direction={direction}
+                            setDirection={setDirection}
                         />
                     );
                 })}

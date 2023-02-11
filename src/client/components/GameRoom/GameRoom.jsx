@@ -1,5 +1,4 @@
-import { useEffect, useCallback } from "react";
-import { useState } from "react";
+import { React, useEffect, useCallback, useState } from "react";
 import { NormalModuleReplacementPlugin } from "webpack";
 import "./App.css";
 import Board from "./Board";
@@ -7,7 +6,8 @@ import Board from "./Board";
 function GameRoom() {
     const [board, setBoard] = useState([]);
     const [clue, setClue] = useState(["--clues here--"]);
-    const [focusArea, setFocusArea] = useState({});
+    const [focusArea, setFocusArea] = useState({ position: 0, range: 1 });
+    const [direction, setDirection] = useState("across");
 
     useEffect(() => {
         fetch("/createGame?date=1983-10-10")
@@ -44,7 +44,7 @@ function GameRoom() {
         if (e.key.toUpperCase() === "BACKSPACE") {
             e.key = "";
             processGuess(e, focusArea);
-            let prev = prevPosition(focusArea.position - 1);
+            const prev = prevPosition(focusArea.position - 1);
             setFocusArea({
                 position: prev,
                 range: board.cells[prev].across.focusRange
@@ -53,10 +53,12 @@ function GameRoom() {
 
         if (e.key.toUpperCase().match(/^[A-Z]$/)) {
             processGuess(e, focusArea);
-            let next = nextPosition(focusArea.position + 1);
+            const next = nextPosition(board.cells[focusArea.position].index);
+            const range =
+                direction === "across" ? "acrossMember" : "downMember";
             setFocusArea({
                 position: next,
-                range: board.cells[next].across.focusRange
+                range: board.cells[next][range]
             });
         }
     }
@@ -73,10 +75,13 @@ function GameRoom() {
     }
 
     function nextPosition(coord) {
-        while (board.cells[coord].letter === ".") {
-            coord++;
+        const increment = direction === "across" ? 1 : board.size.cols;
+        let newCoord = coord + increment;
+
+        while (board.cells[newCoord].letter === ".") {
+            newCoord += increment;
         }
-        return coord;
+        return newCoord;
     }
 
     function prevPosition(coord) {
@@ -84,7 +89,7 @@ function GameRoom() {
             return 0;
         }
         while (board.cells[coord].letter === ".") {
-            coord--;
+            coord -= 1;
         }
         return coord;
     }
@@ -118,6 +123,8 @@ function GameRoom() {
                                 onKeyDown={handleKeyboard}
                                 focusArea={focusArea}
                                 setFocusArea={setFocusArea}
+                                direction={direction}
+                                setDirection={setDirection}
                             />
                         )}
                     </div>
