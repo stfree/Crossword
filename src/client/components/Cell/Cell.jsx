@@ -32,11 +32,14 @@ function Cell({
         if (letter === ".") {
             color = "black";
         }
-        if (direction === "across" && cellData.acrossMember === range) {
+        if (
+            focusArea.direction === "across" &&
+            cellData.acrossMember === range
+        ) {
             // acrossMember doesn't work, but cellData.acrossMember does ??
             color = "#87CEEB";
         }
-        if (direction === "down" && cellData.downMember === range) {
+        if (focusArea.direction === "down" && cellData.downMember === range) {
             color = "#87CEEB";
         }
         if (index === position) {
@@ -62,6 +65,7 @@ function Cell({
                 ? cellData.acrossMember
                 : cellData.downMember;
         setFocusArea({
+            direction: direction,
             position: index,
             range: newRange
         });
@@ -72,12 +76,16 @@ function Cell({
             onClick={() => {
                 if (letter !== ".") {
                     onNewCell();
-                    handleNextClick();
                     console.log(
                         cellData.index,
                         cellData[`${direction}Member`],
-                        direction
+                        direction,
+                        focusArea
                     );
+
+                    if (focusArea.position === index) {
+                        handleNextClick();
+                    }
                 }
             }}
             // onKeyDown={() => {

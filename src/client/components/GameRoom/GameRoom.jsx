@@ -6,7 +6,7 @@ import Board from "./Board";
 function GameRoom() {
     const [board, setBoard] = useState([]);
     const [clue, setClue] = useState(["--clues here--"]);
-    const [focusArea, setFocusArea] = useState({ position: 0, range: 1 });
+    const [focusArea, setFocusArea] = useState({});
     const [direction, setDirection] = useState("across");
 
     useEffect(() => {
@@ -55,8 +55,11 @@ function GameRoom() {
             processGuess(e, focusArea);
             const next = nextPosition(board.cells[focusArea.position].index);
             const range =
-                direction === "across" ? "acrossMember" : "downMember";
+                focusArea.direction === "across"
+                    ? "acrossMember"
+                    : "downMember";
             setFocusArea({
+                ...focusArea,
                 position: next,
                 range: board.cells[next][range]
             });
@@ -75,7 +78,8 @@ function GameRoom() {
     }
 
     function nextPosition(coord) {
-        const increment = direction === "across" ? 1 : board.size.cols;
+        const increment =
+            focusArea.direction === "across" ? 1 : board.size.cols;
         let newCoord = coord + increment;
 
         while (board.cells[newCoord].letter === ".") {
