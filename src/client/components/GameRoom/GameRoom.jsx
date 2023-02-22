@@ -9,7 +9,6 @@ function GameRoom() {
     const [focusArea, setFocusArea] = useState({
         direction: "across"
     });
-    const [direction, setDirection] = useState("across");
 
     useEffect(() => {
         fetch("/createGame?date=1983-10-10")
@@ -155,8 +154,6 @@ function GameRoom() {
                                 onKeyDown={handleKeyboard}
                                 focusArea={focusArea}
                                 setFocusArea={setFocusArea}
-                                direction={direction}
-                                setDirection={setDirection}
                                 changeFocus={changeFocus}
                             />
                         )}

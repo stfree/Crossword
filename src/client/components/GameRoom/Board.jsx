@@ -9,8 +9,6 @@ function Board({
     registerGuess,
     focusArea,
     setFocusArea,
-    direction,
-    setDirection,
     changeFocus
 }) {
     return (
@@ -31,8 +29,6 @@ function Board({
                             setClue={setClue}
                             focusArea={focusArea}
                             setFocusArea={setFocusArea}
-                            direction={direction}
-                            setDirection={setDirection}
                             changeFocus={changeFocus}
                         />
                     );

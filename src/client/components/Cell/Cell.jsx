@@ -6,8 +6,6 @@ function Cell({
     setClue,
     focusArea,
     setFocusArea,
-    direction,
-    setDirection,
     changeFocus
 }) {
     const {
@@ -51,14 +49,16 @@ function Cell({
 
     function onNewCell() {
         setClue(
-            direction === "across" ? cellData.acrossClue : cellData.downClue
+            focusArea.direction === "across"
+                ? cellData.acrossClue
+                : cellData.downClue
         );
         const newRange =
-            direction === "across"
+            focusArea.direction === "across"
                 ? cellData.acrossMember
                 : cellData.downMember;
         setFocusArea({
-            direction: direction,
+            direction: focusArea.direction,
             position: index,
             range: newRange
         });
@@ -68,7 +68,6 @@ function Cell({
         <g
             onClick={() => {
                 if (letter !== ".") {
-                    console.log("before " + direction);
                     if (focusArea.position === index) {
                         changeFocus();
                     } else {
