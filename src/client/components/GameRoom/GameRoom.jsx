@@ -6,7 +6,9 @@ import Board from "./Board";
 function GameRoom() {
     const [board, setBoard] = useState([]);
     const [clue, setClue] = useState(["--clues here--"]);
-    const [focusArea, setFocusArea] = useState({});
+    const [focusArea, setFocusArea] = useState({
+        direction: "across"
+    });
     const [direction, setDirection] = useState("across");
 
     useEffect(() => {
@@ -24,7 +26,7 @@ function GameRoom() {
     }, []);
 
     useEffect(() => {
-        console.log(board);
+        console.log(focusArea);
     }, [board]);
 
     const handleKeyboard = useCallback((event) => {
@@ -98,6 +100,32 @@ function GameRoom() {
         return coord;
     }
 
+    function changeFocus() {
+        handleNextClick();
+        setClue(
+            direction === "across"
+                ? board.cells[focusArea.position].acrossClue
+                : board.cells[focusArea.position].downClue
+        );
+    }
+
+    function toggleClue() {
+        return direction === "across" ? "down" : "across";
+    }
+
+    function handleNextClick() {
+        setDirection(toggleClue());
+        setFocusArea({
+            ...focusArea,
+            range:
+                direction === "across"
+                    ? board.cells[focusArea.position].downMember
+                    : board.cells[focusArea.position].acrossMember,
+            direction: direction === "across" ? "down" : "across"
+        });
+        setBoard({ ...board });
+    }
+
     return (
         <div className="body">
             <div className="main">
@@ -129,6 +157,7 @@ function GameRoom() {
                                 setFocusArea={setFocusArea}
                                 direction={direction}
                                 setDirection={setDirection}
+                                changeFocus={changeFocus}
                             />
                         )}
                     </div>

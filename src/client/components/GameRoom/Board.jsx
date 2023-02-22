@@ -10,7 +10,8 @@ function Board({
     focusArea,
     setFocusArea,
     direction,
-    setDirection
+    setDirection,
+    changeFocus
 }) {
     return (
         <div
@@ -32,6 +33,7 @@ function Board({
                             setFocusArea={setFocusArea}
                             direction={direction}
                             setDirection={setDirection}
+                            changeFocus={changeFocus}
                         />
                     );
                 })}

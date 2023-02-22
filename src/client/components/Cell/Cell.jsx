@@ -7,7 +7,8 @@ function Cell({
     focusArea,
     setFocusArea,
     direction,
-    setDirection
+    setDirection,
+    changeFocus
 }) {
     const {
         guess,
@@ -48,14 +49,6 @@ function Cell({
         return color;
     }
 
-    function toggleClue() {
-        return direction === "across" ? "down" : "across";
-    }
-
-    function handleNextClick() {
-        setDirection(toggleClue());
-    }
-
     function onNewCell() {
         setClue(
             direction === "across" ? cellData.acrossClue : cellData.downClue
@@ -75,17 +68,18 @@ function Cell({
         <g
             onClick={() => {
                 if (letter !== ".") {
-                    onNewCell();
+                    console.log("before " + direction);
+                    if (focusArea.position === index) {
+                        changeFocus();
+                    } else {
+                        onNewCell();
+                    }
                     console.log(
                         cellData.index,
                         cellData[`${direction}Member`],
                         direction,
                         focusArea
                     );
-
-                    if (focusArea.position === index) {
-                        handleNextClick();
-                    }
                 }
             }}
             // onKeyDown={() => {
