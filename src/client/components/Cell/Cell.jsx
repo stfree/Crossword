@@ -75,8 +75,8 @@ function Cell({
                     }
                     console.log(
                         cellData.index,
-                        cellData[`${direction}Member`],
-                        direction,
+                        cellData[`${focusArea.direction}Member`],
+                        focusArea.direction,
                         focusArea
                     );
                 }

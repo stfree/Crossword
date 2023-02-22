@@ -102,25 +102,25 @@ function GameRoom() {
     function changeFocus() {
         handleNextClick();
         setClue(
-            direction === "across"
+            focusArea.direction === "across"
                 ? board.cells[focusArea.position].acrossClue
                 : board.cells[focusArea.position].downClue
         );
     }
 
-    function toggleClue() {
+    function toggleClue(direction) {
         return direction === "across" ? "down" : "across";
     }
 
     function handleNextClick() {
-        setDirection(toggleClue());
+        let direction = toggleClue(focusArea.direction);
         setFocusArea({
             ...focusArea,
             range:
                 direction === "across"
-                    ? board.cells[focusArea.position].downMember
-                    : board.cells[focusArea.position].acrossMember,
-            direction: direction === "across" ? "down" : "across"
+                    ? board.cells[focusArea.position].acrossMember
+                    : board.cells[focusArea.position].downMember,
+            direction: direction
         });
         setBoard({ ...board });
     }
