@@ -74,6 +74,13 @@ function GameRoom() {
                 range: board.cells[next][range]
             });
         }
+
+        if (e.key.toUpperCase() === "TAB") {
+            e.preventDefault();
+            e.key = "";
+            processGuess(e, focusArea);
+            handleNextClick();
+        }
     }
 
     function processGuess(e, focusCoords) {
