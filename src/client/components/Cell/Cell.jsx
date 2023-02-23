@@ -48,11 +48,11 @@ function Cell({
     }
 
     function onNewCell() {
-        setClue(
-            focusArea.direction === "across"
-                ? cellData.acrossClue
-                : cellData.downClue
-        );
+        // setClue(
+        //     focusArea.direction === "across"
+        //         ? cellData.acrossClue
+        //         : cellData.downClue
+        // );
         const newRange =
             focusArea.direction === "across"
                 ? cellData.acrossMember

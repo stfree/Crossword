@@ -4,7 +4,6 @@ import "./App.css";
 import Board from "./Board";
 
 // in the middle of removing clue/setClue state
-
 // need to move onNewCell up to gameRoom - add clue to focusArea or nah?
 
 function GameRoom() {
@@ -167,7 +166,7 @@ function GameRoom() {
                 </div>
                 <div className="clue">
                     <span>
-                        <h1>{focusArea.position && getClue()}</h1>
+                        <h1>{focusArea.position > -1 && getClue()}</h1>
                     </span>
                 </div>
                 <div className="canvas">

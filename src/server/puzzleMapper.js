@@ -139,7 +139,7 @@ function generateCellsObjectArray(
 /* eslint-disable no-param-reassign */
 function clueMapper(clues) {
     return clues.reduce((accum, cur, index) => {
-        const [num, clue] = cur.split(".");
+        const [num, clue] = cur.split(/\.(.*)/, 2);
         accum[num] = { clue: clue.trim(), index };
         return accum;
     }, {});
