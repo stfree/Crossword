@@ -77,7 +77,7 @@ function GameRoom() {
 
         if (e.key.toUpperCase() === "TAB") {
             e.preventDefault();
-            e.key = "";
+            e.key = board.cells[focusArea.position].guess;
             processGuess(e, focusArea);
             handleNextClick();
         }
@@ -114,7 +114,7 @@ function GameRoom() {
         if (coord <= 0) {
             return 0;
         }
-        while (board.cells[coord].letter === ".") {
+        while (board.cells[newCoord].letter === ".") {
             newCoord -= decrement;
         }
         return newCoord;
@@ -167,7 +167,7 @@ function GameRoom() {
                 </div>
                 <div className="clue">
                     <span>
-                        <h1>{focusArea.position > -1 && getClue()}</h1>
+                        <h1>{focusArea.position && getClue()}</h1>
                     </span>
                 </div>
                 <div className="canvas">

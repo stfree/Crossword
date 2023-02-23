@@ -81,13 +81,6 @@ function Cell({
                     );
                 }
             }}
-            // onKeyDown={() => {
-            //     setFocusArea({
-            //         position: index + 1,
-            //         range: cellData.acrossMember
-            //         // range: cellData[direction].focusRange
-            //     });
-            // }}
         >
             <rect
                 x={x + cellPadding}
