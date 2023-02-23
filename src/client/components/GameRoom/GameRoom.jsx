@@ -3,6 +3,10 @@ import { NormalModuleReplacementPlugin } from "webpack";
 import "./App.css";
 import Board from "./Board";
 
+// in the middle of removing clue/setClue state
+
+// need to move onNewCell up to gameRoom - add clue to focusArea or nah?
+
 function GameRoom() {
     const [board, setBoard] = useState([]);
     const [clue, setClue] = useState(["--clues here--"]);
@@ -45,10 +49,15 @@ function GameRoom() {
         if (e.key.toUpperCase() === "BACKSPACE") {
             e.key = "";
             processGuess(e, focusArea);
-            const prev = prevPosition(focusArea.position - 1);
+            const prev = prevPosition(focusArea.position);
+            const range =
+                focusArea.direction === "across"
+                    ? "acrossMember"
+                    : "downMember";
             setFocusArea({
+                ...focusArea,
                 position: prev,
-                range: board.cells[prev].across.focusRange
+                range: board.cells[prev][range]
             });
         }
 
@@ -90,13 +99,18 @@ function GameRoom() {
     }
 
     function prevPosition(coord) {
+        const decrement =
+            focusArea.direction === "across" ? 1 : board.size.cols;
+
+        let newCoord = coord - decrement;
+
         if (coord <= 0) {
             return 0;
         }
         while (board.cells[coord].letter === ".") {
-            coord -= 1;
+            newCoord -= decrement;
         }
-        return coord;
+        return newCoord;
     }
 
     function changeFocus() {
@@ -106,6 +120,12 @@ function GameRoom() {
                 ? board.cells[focusArea.position].acrossClue
                 : board.cells[focusArea.position].downClue
         );
+    }
+
+    function getClue() {
+        return focusArea.direction === "across"
+            ? board.cells[focusArea.position].acrossClue
+            : board.cells[focusArea.position].downClue;
     }
 
     function toggleClue(direction) {
@@ -140,7 +160,7 @@ function GameRoom() {
                 </div>
                 <div className="clue">
                     <span>
-                        <h1>{clue}</h1>
+                        <h1>{focusArea.position > -1 && getClue()}</h1>
                     </span>
                 </div>
                 <div className="canvas">
