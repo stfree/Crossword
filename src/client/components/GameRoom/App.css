@@ -93,3 +93,7 @@ html {
 h1 {
     font-weight: 200;
 }
+
+.highlight {
+    color: blue;
+}

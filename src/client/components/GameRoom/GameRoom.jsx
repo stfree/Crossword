@@ -151,6 +151,20 @@ function GameRoom() {
         setBoard({ ...board });
     }
 
+    function acrossClueList() {
+        board.clueArrayAcross.map((clue) => {
+            const clueText = clue.split(/\.(.*)/, 2);
+            if (
+                focusArea.position &&
+                board.cells[focusArea.position].acrossClue ===
+                    clueText[1].trim()
+            ) {
+                return <li className="highlight">{clue}</li>;
+            }
+            return <li>{clue}</li>;
+        });
+    }
+
     return (
         <div className="body">
             <div className="main">
@@ -190,9 +204,25 @@ function GameRoom() {
                             <div className="list">
                                 <ul>
                                     {board.clueArrayAcross &&
-                                        board.clueArrayAcross.map((clue) => (
-                                            <li>{clue}</li>
-                                        ))}
+                                        board.clueArrayAcross.map((clue) => {
+                                            const clueText = clue.split(
+                                                /\.(.*)/,
+                                                2
+                                            );
+                                            if (
+                                                focusArea.position &&
+                                                board.cells[focusArea.position]
+                                                    .acrossClue ===
+                                                    clueText[1].trim()
+                                            ) {
+                                                return (
+                                                    <li className="highlight">
+                                                        {clue}
+                                                    </li>
+                                                );
+                                            }
+                                            return <li>{clue}</li>;
+                                        })}
                                 </ul>
                             </div>
                         </div>
@@ -201,9 +231,25 @@ function GameRoom() {
                             <div className="list">
                                 <ul>
                                     {board.clueArrayDown &&
-                                        board.clueArrayDown.map((clue) => (
-                                            <li>{clue}</li>
-                                        ))}
+                                        board.clueArrayDown.map((clue) => {
+                                            const clueText = clue.split(
+                                                /\.(.*)/,
+                                                2
+                                            );
+                                            if (
+                                                focusArea.position &&
+                                                board.cells[focusArea.position]
+                                                    .downClue ===
+                                                    clueText[1].trim()
+                                            ) {
+                                                return (
+                                                    <li className="highlight">
+                                                        {clue}
+                                                    </li>
+                                                );
+                                            }
+                                            return <li>{clue}</li>;
+                                        })}
                                 </ul>
                             </div>
                         </div>
