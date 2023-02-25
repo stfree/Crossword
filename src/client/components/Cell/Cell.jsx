@@ -6,7 +6,8 @@ function Cell({
     setClue,
     focusArea,
     setFocusArea,
-    changeFocus
+    changeFocus,
+    onNewCell
 }) {
     const {
         guess,
@@ -47,22 +48,17 @@ function Cell({
         return color;
     }
 
-    function onNewCell() {
-        // setClue(
-        //     focusArea.direction === "across"
-        //         ? cellData.acrossClue
-        //         : cellData.downClue
-        // );
-        const newRange =
-            focusArea.direction === "across"
-                ? cellData.acrossMember
-                : cellData.downMember;
-        setFocusArea({
-            direction: focusArea.direction,
-            position: index,
-            range: newRange
-        });
-    }
+    // function onNewCell() {
+    //     const newRange =
+    //         focusArea.direction === "across"
+    //             ? cellData.acrossMember
+    //             : cellData.downMember;
+    //     setFocusArea({
+    //         direction: focusArea.direction,
+    //         position: index,
+    //         range: newRange
+    //     });
+    // }
 
     return (
         <g
@@ -71,7 +67,7 @@ function Cell({
                     if (focusArea.position === index) {
                         changeFocus();
                     } else {
-                        onNewCell();
+                        onNewCell(cellData);
                     }
                     console.log(
                         cellData.index,

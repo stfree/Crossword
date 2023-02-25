@@ -9,7 +9,8 @@ function Board({
     registerGuess,
     focusArea,
     setFocusArea,
-    changeFocus
+    changeFocus,
+    onNewCell
 }) {
     return (
         <div
@@ -30,6 +31,7 @@ function Board({
                             focusArea={focusArea}
                             setFocusArea={setFocusArea}
                             changeFocus={changeFocus}
+                            onNewCell={onNewCell}
                         />
                     );
                 })}

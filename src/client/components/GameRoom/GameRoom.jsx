@@ -151,6 +151,18 @@ function GameRoom() {
         setBoard({ ...board });
     }
 
+    function onNewCell(cellData) {
+        const newRange =
+            focusArea.direction === "across"
+                ? cellData.acrossMember
+                : cellData.downMember;
+        setFocusArea({
+            direction: focusArea.direction,
+            position: cellData.index,
+            range: newRange
+        });
+    }
+
     function acrossClueList() {
         board.clueArrayAcross.map((clue) => {
             const clueText = clue.split(/\.(.*)/, 2);
@@ -195,6 +207,7 @@ function GameRoom() {
                                 focusArea={focusArea}
                                 setFocusArea={setFocusArea}
                                 changeFocus={changeFocus}
+                                onNewCell={onNewCell}
                             />
                         )}
                     </div>
@@ -231,7 +244,18 @@ function GameRoom() {
                                                     </li>
                                                 );
                                             }
-                                            return <li>{clue}</li>;
+                                            return (
+                                                <li
+                                                    onClick={(event) =>
+                                                        console.log(
+                                                            event.target
+                                                                .textContent
+                                                        )
+                                                    }
+                                                >
+                                                    {clue}
+                                                </li>
+                                            );
                                         })}
                                 </ul>
                             </div>
