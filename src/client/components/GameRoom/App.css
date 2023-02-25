@@ -73,7 +73,18 @@ html {
     align-items: flex-start;
     justify-content: space-between;
     border: 1px solid gray;
-    margin-left: 20px;
+    margin-left: 0px;
+}
+
+.clueList ul {
+    list-style-type: none;
+    margin-left: 0px;
+}
+
+/*does nothing*/
+ul li {
+    display: block;
+    padding-inline: 0px;
 }
 
 .across {
@@ -94,6 +105,11 @@ h1 {
     font-weight: 200;
 }
 
-.highlight {
-    color: blue;
+.highlight-primary {
+    background-color: #87ceeb;
+    font-weight: 700;
+}
+
+.highlight-secondary {
+    font-weight: 700;
 }

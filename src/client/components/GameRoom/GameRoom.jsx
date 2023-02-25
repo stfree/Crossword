@@ -210,13 +210,23 @@ function GameRoom() {
                                                 2
                                             );
                                             if (
-                                                focusArea.position &&
+                                                focusArea.position > -1 &&
                                                 board.cells[focusArea.position]
                                                     .acrossClue ===
                                                     clueText[1].trim()
                                             ) {
+                                                if (
+                                                    focusArea.direction ===
+                                                    "across"
+                                                ) {
+                                                    return (
+                                                        <li className="highlight-primary">
+                                                            {clue}
+                                                        </li>
+                                                    );
+                                                }
                                                 return (
-                                                    <li className="highlight">
+                                                    <li className="highlight-secondary">
                                                         {clue}
                                                     </li>
                                                 );
@@ -237,13 +247,23 @@ function GameRoom() {
                                                 2
                                             );
                                             if (
-                                                focusArea.position &&
+                                                focusArea.position > -1 &&
                                                 board.cells[focusArea.position]
                                                     .downClue ===
                                                     clueText[1].trim()
                                             ) {
+                                                if (
+                                                    focusArea.direction ===
+                                                    "down"
+                                                ) {
+                                                    return (
+                                                        <li className="highlight-primary">
+                                                            {clue}
+                                                        </li>
+                                                    );
+                                                }
                                                 return (
-                                                    <li className="highlight">
+                                                    <li className="highlight-secondary">
                                                         {clue}
                                                     </li>
                                                 );
