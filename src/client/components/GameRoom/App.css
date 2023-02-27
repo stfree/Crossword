@@ -87,6 +87,10 @@ ul li {
     padding-inline: 0px;
 }
 
+ul li:hover {
+    background-color: rgb(200, 235, 249);
+}
+
 .across {
     width: 180px;
     border: 1px solid gray;

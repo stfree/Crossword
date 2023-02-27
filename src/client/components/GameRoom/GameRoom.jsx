@@ -163,6 +163,25 @@ function GameRoom() {
         });
     }
 
+    function onClueClick(direction, range) {
+        // direction: which are did I click on?
+        // position? default to first cell in range
+        // range: findmember() acrossMember / downMember
+        let position;
+
+        board.cells.map((cell) => {
+            if (cell[`${direction}Member`] === range) {
+                position = cell[`${direction}Start`];
+            }
+        });
+
+        setFocusArea({
+            direction: direction,
+            position: position,
+            range: range
+        });
+    }
+
     function acrossClueList() {
         board.clueArrayAcross.map((clue) => {
             const clueText = clue.split(/\.(.*)/, 2);
@@ -218,6 +237,7 @@ function GameRoom() {
                                 <ul>
                                     {board.clueArrayAcross &&
                                         board.clueArrayAcross.map((clue) => {
+                                            let className = "";
                                             const clueText = clue.split(
                                                 /\.(.*)/,
                                                 2
@@ -232,26 +252,27 @@ function GameRoom() {
                                                     focusArea.direction ===
                                                     "across"
                                                 ) {
-                                                    return (
-                                                        <li className="highlight-primary">
-                                                            {clue}
-                                                        </li>
-                                                    );
+                                                    className =
+                                                        "highlight-primary";
+                                                } else {
+                                                    className =
+                                                        "highlight-secondary";
                                                 }
-                                                return (
-                                                    <li className="highlight-secondary">
-                                                        {clue}
-                                                    </li>
-                                                );
                                             }
                                             return (
                                                 <li
-                                                    onClick={(event) =>
+                                                    className={className}
+                                                    onClick={(event) => {
                                                         console.log(
                                                             event.target
                                                                 .textContent
-                                                        )
-                                                    }
+                                                        );
+                                                        onClueClick(
+                                                            "across",
+                                                            clueText[0].trim() *
+                                                                1
+                                                        );
+                                                    }}
                                                 >
                                                     {clue}
                                                 </li>
