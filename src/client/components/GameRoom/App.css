@@ -43,6 +43,7 @@ html {
     justify-content: left;
     align-items: center;
     height: 50px;
+    width: 788px;
     background-color: skyblue;
     margin-top: 0px;
     margin-bottom: 10px;
@@ -58,7 +59,7 @@ html {
 
 .crossword-grid {
     width: 804px;
-    height: 800px;
+    height: 804;
     background-color: whitesmoke;
     border: 2px solid black;
     margin: 0px;
@@ -81,10 +82,8 @@ html {
     margin-left: 0px;
 }
 
-/*does nothing*/
-ul li {
-    display: block;
-    padding-inline: 0px;
+ul {
+    padding-left: 10px;
 }
 
 ul li:hover {
@@ -93,12 +92,12 @@ ul li:hover {
 
 .across {
     width: 180px;
-    border: 1px solid gray;
+    border-right: 1px solid gray;
 }
 
 .down {
     width: 180px;
-    border: 1px solid gray;
+    border: 0px solid gray;
 }
 
 .list {
