@@ -64,7 +64,7 @@ function Cell({ cellData, focusArea, changeFocus, onNewCell }) {
                 stroke="black"
                 strokeWidth={cellSize / 50}
             />
-            <polygon points="5 0,10 0,10 5" fill="red"></polygon>
+            <polygon points="5 0,10 0,10 5" fill="red" />
             {gridnums && (
                 <text
                     x={x + cellPadding * 4 + 0.4}

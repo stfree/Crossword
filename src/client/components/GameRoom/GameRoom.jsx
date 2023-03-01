@@ -2,6 +2,7 @@ import { React, useEffect, useCallback, useState } from "react";
 import { NormalModuleReplacementPlugin } from "webpack";
 import "./App.css";
 import Board from "./Board";
+import ClueList from "../ClueList/ClueList";
 
 // in the middle of removing clue/setClue state
 // need to move onNewCell up to gameRoom - add clue to focusArea or nah?
@@ -133,7 +134,7 @@ function GameRoom() {
     }
 
     function handleNextClick() {
-        let direction = toggleClue(focusArea.direction);
+        const direction = toggleClue(focusArea.direction);
         setFocusArea({
             ...focusArea,
             range:
@@ -180,7 +181,11 @@ function GameRoom() {
         <div className="body">
             <div className="main">
                 <div className="header">
-                    <img src="/images/eustace-400.webp" width="200"></img>
+                    <img
+                        src="/images/eustace-400.webp"
+                        width="200"
+                        alt="Banner"
+                    />
                     <div className="title">
                         <span>The New Jersey Times </span>
                         <span>Crossword</span>
@@ -262,36 +267,13 @@ function GameRoom() {
                             <h1>Down</h1>
                             <div className="list">
                                 <ul>
-                                    {board.clueArrayDown &&
-                                        board.clueArrayDown.map((clue) => {
-                                            const clueText = clue.split(
-                                                /\.(.*)/,
-                                                2
-                                            );
-                                            if (
-                                                focusArea.position > -1 &&
-                                                board.cells[focusArea.position]
-                                                    .downClue ===
-                                                    clueText[1].trim()
-                                            ) {
-                                                if (
-                                                    focusArea.direction ===
-                                                    "down"
-                                                ) {
-                                                    return (
-                                                        <li className="highlight-primary">
-                                                            {clue}
-                                                        </li>
-                                                    );
-                                                }
-                                                return (
-                                                    <li className="highlight-secondary">
-                                                        {clue}
-                                                    </li>
-                                                );
-                                            }
-                                            return <li>{clue}</li>;
-                                        })}
+                                    {board.cells && (
+                                        <ClueList
+                                            board={board}
+                                            focusArea={focusArea}
+                                            onClueClick={onClueClick}
+                                        />
+                                    )}
                                 </ul>
                             </div>
                         </div>

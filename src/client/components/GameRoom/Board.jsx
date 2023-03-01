@@ -1,5 +1,4 @@
 import { React } from "react";
-import GameRoom from "./GameRoom";
 import Cell from "../Cell/Cell";
 
 function Board({
@@ -18,17 +17,15 @@ function Board({
             }}
         >
             <svg viewBox="0 0 150 150">
-                {boardData.cells.map((cell) => {
-                    return (
-                        <Cell
-                            key={cell.index}
-                            cellData={cell}
-                            focusArea={focusArea}
-                            changeFocus={changeFocus}
-                            onNewCell={onNewCell}
-                        />
-                    );
-                })}
+                {boardData.cells.map((cell) => (
+                    <Cell
+                        key={cell.index}
+                        cellData={cell}
+                        focusArea={focusArea}
+                        changeFocus={changeFocus}
+                        onNewCell={onNewCell}
+                    />
+                ))}
             </svg>
         </div>
     );
