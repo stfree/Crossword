@@ -1,14 +1,6 @@
 import { React } from "react";
 
-function Cell({
-    cellData,
-    setBoardData,
-    setClue,
-    focusArea,
-    setFocusArea,
-    changeFocus,
-    onNewCell
-}) {
+function Cell({ cellData, focusArea, changeFocus, onNewCell }) {
     const {
         guess,
         row,
@@ -19,7 +11,7 @@ function Cell({
         acrossMember,
         downMember
     } = cellData;
-    const { position, range } = focusArea;
+    const { direction, position, range } = focusArea;
     const cellPadding = 0;
     const cellSize = 10;
     const cellInner = 10;
@@ -32,14 +24,11 @@ function Cell({
         if (letter === ".") {
             color = "black";
         }
-        if (
-            focusArea.direction === "across" &&
-            cellData.acrossMember === range
-        ) {
+        if (direction === "across" && acrossMember === range) {
             // acrossMember doesn't work, but cellData.acrossMember does ??
             color = "#87CEEB";
         }
-        if (focusArea.direction === "down" && cellData.downMember === range) {
+        if (direction === "down" && downMember === range) {
             color = "#87CEEB";
         }
         if (index === position) {
@@ -48,33 +37,21 @@ function Cell({
         return color;
     }
 
-    // function onNewCell() {
-    //     const newRange =
-    //         focusArea.direction === "across"
-    //             ? cellData.acrossMember
-    //             : cellData.downMember;
-    //     setFocusArea({
-    //         direction: focusArea.direction,
-    //         position: index,
-    //         range: newRange
-    //     });
-    // }
-
     return (
         <g
             onClick={() => {
                 if (letter !== ".") {
-                    if (focusArea.position === index) {
+                    if (position === index) {
                         changeFocus();
                     } else {
                         onNewCell(cellData);
                     }
-                    console.log(
-                        cellData.index,
-                        cellData[`${focusArea.direction}Member`],
-                        focusArea.direction,
-                        focusArea
-                    );
+                    // console.log(
+                    //     cellData.index,
+                    //     cellData[`${focusArea.direction}Member`],
+                    //     focusArea.direction,
+                    //     focusArea
+                    // );
                 }
             }}
         >
@@ -111,7 +88,5 @@ function Cell({
         </g>
     );
 }
-
-//
 
 export default Cell;

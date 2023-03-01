@@ -4,11 +4,8 @@ import Cell from "../Cell/Cell";
 
 function Board({
     boardData,
-    setBoardData,
-    setClue,
     registerGuess,
     focusArea,
-    setFocusArea,
     changeFocus,
     onNewCell
 }) {
@@ -26,10 +23,7 @@ function Board({
                         <Cell
                             key={cell.index}
                             cellData={cell}
-                            setBoardData={setBoardData}
-                            setClue={setClue}
                             focusArea={focusArea}
-                            setFocusArea={setFocusArea}
                             changeFocus={changeFocus}
                             onNewCell={onNewCell}
                         />

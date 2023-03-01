@@ -8,7 +8,6 @@ import Board from "./Board";
 
 function GameRoom() {
     const [board, setBoard] = useState([]);
-    const [clue, setClue] = useState(["--clues here--"]);
     const [focusArea, setFocusArea] = useState({
         direction: "across"
     });
@@ -121,11 +120,6 @@ function GameRoom() {
 
     function changeFocus() {
         handleNextClick();
-        setClue(
-            focusArea.direction === "across"
-                ? board.cells[focusArea.position].acrossClue
-                : board.cells[focusArea.position].downClue
-        );
     }
 
     function getClue() {
@@ -182,20 +176,6 @@ function GameRoom() {
         });
     }
 
-    function acrossClueList() {
-        board.clueArrayAcross.map((clue) => {
-            const clueText = clue.split(/\.(.*)/, 2);
-            if (
-                focusArea.position &&
-                board.cells[focusArea.position].acrossClue ===
-                    clueText[1].trim()
-            ) {
-                return <li className="highlight">{clue}</li>;
-            }
-            return <li>{clue}</li>;
-        });
-    }
-
     return (
         <div className="body">
             <div className="main">
@@ -219,12 +199,9 @@ function GameRoom() {
                         {board.cells && (
                             <Board
                                 boardData={board}
-                                setBoardData={setBoard}
-                                setClue={setClue}
                                 registerGuess={registerGuess}
                                 onKeyDown={handleKeyboard}
                                 focusArea={focusArea}
-                                setFocusArea={setFocusArea}
                                 changeFocus={changeFocus}
                                 onNewCell={onNewCell}
                             />
