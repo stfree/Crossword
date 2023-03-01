@@ -217,49 +217,15 @@ function GameRoom() {
                             <h1>Across</h1>
                             <div className="list">
                                 <ul>
-                                    {board.clueArrayAcross &&
-                                        board.clueArrayAcross.map((clue) => {
-                                            let className = "";
-                                            const clueText = clue.split(
-                                                /\.(.*)/,
-                                                2
-                                            );
-                                            if (
-                                                focusArea.position > -1 &&
-                                                board.cells[focusArea.position]
-                                                    .acrossClue ===
-                                                    clueText[1].trim()
-                                            ) {
-                                                if (
-                                                    focusArea.direction ===
-                                                    "across"
-                                                ) {
-                                                    className =
-                                                        "highlight-primary";
-                                                } else {
-                                                    className =
-                                                        "highlight-secondary";
-                                                }
-                                            }
-                                            return (
-                                                <li
-                                                    className={className}
-                                                    onClick={(event) => {
-                                                        console.log(
-                                                            event.target
-                                                                .textContent
-                                                        );
-                                                        onClueClick(
-                                                            "across",
-                                                            clueText[0].trim() *
-                                                                1
-                                                        );
-                                                    }}
-                                                >
-                                                    {clue}
-                                                </li>
-                                            );
-                                        })}
+                                    {board.clueArrayAcross && (
+                                        <ClueList
+                                            clueArray={board.clueArrayAcross}
+                                            direction={"across"}
+                                            cells={board.cells}
+                                            focusArea={focusArea}
+                                            onClueClick={onClueClick}
+                                        />
+                                    )}
                                 </ul>
                             </div>
                         </div>
@@ -267,9 +233,11 @@ function GameRoom() {
                             <h1>Down</h1>
                             <div className="list">
                                 <ul>
-                                    {board.cells && (
+                                    {board.clueArrayDown && (
                                         <ClueList
-                                            board={board}
+                                            clueArray={board.clueArrayDown}
+                                            direction={"down"}
+                                            cells={board.cells}
                                             focusArea={focusArea}
                                             onClueClick={onClueClick}
                                         />

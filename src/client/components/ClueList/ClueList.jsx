@@ -1,14 +1,14 @@
 import { React } from "react";
 
-function ClueList({ board, focusArea, onClueClick }) {
-    return board.clueArrayDown.map((clue) => {
+function ClueList({ clueArray, direction, cells, focusArea, onClueClick }) {
+    return clueArray.map((clue) => {
         let className = "";
         const clueText = clue.split(/\.(.*)/, 2);
         if (
             focusArea.position > -1 &&
-            board.cells[focusArea.position].downClue === clueText[1].trim()
+            cells[focusArea.position][`${direction}Clue`] === clueText[1].trim()
         ) {
-            if (focusArea.direction === "down") {
+            if (focusArea.direction === direction) {
                 className = "highlight-primary";
             } else {
                 className = "highlight-secondary";
@@ -17,8 +17,8 @@ function ClueList({ board, focusArea, onClueClick }) {
         return (
             <li
                 className={className}
-                onClick={(event) => {
-                    onClueClick("down", clueText[0].trim() * 1);
+                onClick={() => {
+                    onClueClick(direction, clueText[0].trim() * 1);
                 }}
             >
                 {clue}
