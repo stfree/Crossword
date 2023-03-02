@@ -19,6 +19,7 @@ function GameRoom() {
                 if (data.status === 304 || data.status === 200) {
                     data.json().then(({ data }) => {
                         setBoard(data);
+                        console.log(data);
                     });
                 }
             })
@@ -174,10 +175,26 @@ function GameRoom() {
     }
 
     function checkBoard() {
-        //  board.cells.map(() => {} )
+        const newCells = board.cells.map((cell) => {
+            if (cell.guess === cell.letter) {
+                cell.checked = true;
+            }
+            return cell;
+        });
+        setBoard({ ...board, cells: newCells });
     }
 
-    function checkClue() {}
+    function checkClue() {
+        const newCells = board.cells.map((cell) => {
+            if (cell[`${focusArea.direction}Member`] === focusArea.range) {
+                if (cell.guess === cell.letter) {
+                    cell.checked = true;
+                }
+            }
+            return cell;
+        });
+        setBoard({ ...board, cells: newCells });
+    }
 
     function checkCell() {
         const guess = board.cells[focusArea.position].guess;
@@ -185,8 +202,7 @@ function GameRoom() {
         const isChecked = board.cells[focusArea.position].checked;
 
         const newCells = board.cells.map((cell) => cell);
-        console.log("from the checkCell function");
-        if (isChecked === false && guess === letter) {
+        if (!isChecked && guess === letter) {
             newCells[focusArea.position].checked = true;
             setBoard({ ...board, cells: newCells });
         }
@@ -216,6 +232,26 @@ function GameRoom() {
                             }
                         >
                             Check Cell
+                        </button>
+                        <button
+                            type="button"
+                            onClick={
+                                focusArea.position > -1
+                                    ? () => checkClue()
+                                    : () => console.log("no")
+                            }
+                        >
+                            Check Clue
+                        </button>
+                        <button
+                            type="button"
+                            onClick={
+                                focusArea.position > -1
+                                    ? () => checkBoard()
+                                    : () => console.log("no")
+                            }
+                        >
+                            Check Board
                         </button>
                     </div>
                 </div>

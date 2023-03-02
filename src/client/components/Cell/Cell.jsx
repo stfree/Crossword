@@ -47,14 +47,13 @@ function Cell({ cellData, focusArea, changeFocus, onNewCell }) {
 
     return (
         <g
-            onClick={(e) => {
+            onClick={() => {
                 if (letter !== ".") {
                     if (position === index) {
                         changeFocus();
                     } else {
                         onNewCell(cellData);
                     }
-                    e.stopPropagation();
                     // console.log(
                     //     cellData.index,
                     //     cellData[`${focusArea.direction}Member`],
