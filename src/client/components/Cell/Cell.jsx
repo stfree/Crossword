@@ -9,7 +9,8 @@ function Cell({ cellData, focusArea, changeFocus, onNewCell }) {
         gridnums,
         index,
         acrossMember,
-        downMember
+        downMember,
+        checked
     } = cellData;
     const { direction, position, range } = focusArea;
     const cellPadding = 0;
@@ -35,6 +36,13 @@ function Cell({ cellData, focusArea, changeFocus, onNewCell }) {
             color = "orange";
         }
         return color;
+    }
+
+    function fillText() {
+        if (checked && guess === letter) {
+            return "#0060d6";
+        }
+        return "black";
     }
 
     return (
@@ -71,7 +79,7 @@ function Cell({ cellData, focusArea, changeFocus, onNewCell }) {
                     y={y + cellPadding * 4 + 0.4}
                     textAnchor="start"
                     dominantBaseline="hanging"
-                    style={{ fontSize: "14%", fill: "Black", zIndex: "0" }}
+                    style={{ fontSize: "14%", fill: "black", zIndex: "0" }}
                 >
                     {gridnums}
                 </text>
@@ -81,7 +89,12 @@ function Cell({ cellData, focusArea, changeFocus, onNewCell }) {
                 y={y + 6.5}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                style={{ fontSize: "28%", fontWeight: "100", zIndex: "1" }}
+                style={{
+                    fontSize: "29%",
+                    fill: { fillText },
+                    fontWeight: "500",
+                    zIndex: "1"
+                }}
             >
                 {guess}
             </text>

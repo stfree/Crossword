@@ -88,7 +88,7 @@ function generateCellsObjectArray(
         index, // creates 0: {} ? why isn't it index, { gridnums: ....}
         gridnums: gridnums[index],
         letter: cell,
-        focus: false,
+        checked: false,
         guess: "",
         row: row(index),
         column: column(index),

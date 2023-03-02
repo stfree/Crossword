@@ -159,11 +159,7 @@ function GameRoom() {
     }
 
     function onClueClick(direction, range) {
-        // direction: which are did I click on?
-        // position? default to first cell in range
-        // range: findmember() acrossMember / downMember
         let position;
-
         board.cells.map((cell) => {
             if (cell[`${direction}Member`] === range) {
                 position = cell[`${direction}Start`];
@@ -175,6 +171,25 @@ function GameRoom() {
             position: position,
             range: range
         });
+    }
+
+    function checkBoard() {
+        //  board.cells.map(() => {} )
+    }
+
+    function checkClue() {}
+
+    function checkCell() {
+        const guess = board.cells[focusArea.position].guess;
+        const letter = board.cells[focusArea.position].letter;
+        const isChecked = board.cells[focusArea.position].checked;
+
+        const newCells = board.cells.map((cell) => cell);
+        console.log("from the checkCell function");
+        if (isChecked === false && guess === letter) {
+            newCells[focusArea.position].checked = true;
+            setBoard({ ...board, cells: newCells });
+        }
     }
 
     return (
@@ -191,7 +206,17 @@ function GameRoom() {
                         <span>Crossword</span>
                     </div>
                     <div className="settings">
-                        <span>Settings</span>
+                        <span>Settings </span>
+                        <button
+                            type="button"
+                            onClick={
+                                focusArea.position > -1
+                                    ? checkCell()
+                                    : () => console.log("no")
+                            }
+                        >
+                            Check Cell
+                        </button>
                     </div>
                 </div>
                 <div className="clue">
@@ -224,6 +249,7 @@ function GameRoom() {
                                             cells={board.cells}
                                             focusArea={focusArea}
                                             onClueClick={onClueClick}
+                                            registerGuess={registerGuess}
                                         />
                                     )}
                                 </ul>
@@ -240,6 +266,7 @@ function GameRoom() {
                                             cells={board.cells}
                                             focusArea={focusArea}
                                             onClueClick={onClueClick}
+                                            registerGuess={registerGuess}
                                         />
                                     )}
                                 </ul>
