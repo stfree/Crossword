@@ -47,13 +47,14 @@ function Cell({ cellData, focusArea, changeFocus, onNewCell }) {
 
     return (
         <g
-            onClick={() => {
+            onClick={(e) => {
                 if (letter !== ".") {
                     if (position === index) {
                         changeFocus();
                     } else {
                         onNewCell(cellData);
                     }
+                    e.stopPropagation();
                     // console.log(
                     //     cellData.index,
                     //     cellData[`${focusArea.direction}Member`],
@@ -91,7 +92,7 @@ function Cell({ cellData, focusArea, changeFocus, onNewCell }) {
                 dominantBaseline="middle"
                 style={{
                     fontSize: "29%",
-                    fill: { fillText },
+                    fill: fillText(),
                     fontWeight: "500",
                     zIndex: "1"
                 }}

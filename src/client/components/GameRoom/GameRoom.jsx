@@ -211,7 +211,7 @@ function GameRoom() {
                             type="button"
                             onClick={
                                 focusArea.position > -1
-                                    ? checkCell()
+                                    ? () => checkCell()
                                     : () => console.log("no")
                             }
                         >
