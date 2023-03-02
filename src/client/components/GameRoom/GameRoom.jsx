@@ -218,7 +218,7 @@ function GameRoom() {
                         alt="Banner"
                     />
                     <div className="title">
-                        <span>The New Jersey Times </span>
+                        <span className="subTitle">The New Jersey Times </span>
                         <span>Crossword</span>
                     </div>
                     <div className="settings">

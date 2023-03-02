@@ -25,12 +25,18 @@ html {
 
 .title {
     display: flex;
-    align-items: center;
+    align-items: left;
     flex-direction: column;
     flex-wrap: wrap;
     font-family: Georgia, "Times New Roman", Times, serif sans-serif;
     font-size: 3em;
-    font-weight: 400;
+    font-weight: 500;
+    padding-bottom: 20px;
+}
+
+.subTitle {
+    font-size: 24px;
+    font-style: italic;
 }
 
 .settings {
