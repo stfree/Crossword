@@ -98,16 +98,18 @@ function GameRoom() {
         const increment =
             focusArea.direction === "across" ? 1 : board.size.cols;
         let newCoord = coord + increment;
-        let next = 0;
 
-        if (board.cells[newCoord].letter !== ".") {
-            next = board.cells[newCoord][`${focusArea.direction}Next`];
-        }
-
-        if (board.cells[newCoord].letter === ".") {
-            // loop until you find the coords {direction}Next
-
-            newCoord = board.cells[newCoord][`${focusArea.direction}Next`];
+        if (coord === board.cells.length) {
+            newCoord = 0;
+        } else if (
+            board.cells[newCoord] === undefined ||
+            board.cells[newCoord].letter === "."
+        ) {
+            // find next index through indexMap
+            newCoord =
+                board.memberIndexMap[focusArea.direction][
+                    board.cells[coord][`${focusArea.direction}Next`]
+                ];
         }
         return newCoord;
     }
