@@ -67,6 +67,7 @@ const populateMemberObject = (
                 clueMap,
                 cluesArray
             );
+            updateMemberIndexMap(direction, gridnum, position[2]);
         });
     }
 };
@@ -145,10 +146,18 @@ function clueMapper(clues) {
     }, {});
 }
 
+const memberIndexMapTemp = { across: {}, down: {} };
+
+// create { member : start index } table
+function updateMemberIndexMap(direction, member, startIndex) {
+    if (member && memberIndexMapTemp[direction][member] === undefined) {
+        memberIndexMapTemp[direction][member] = startIndex;
+    }
+}
+
 // start here
 const puzzleMapper = (puzzle) => ({
     size: puzzle.size,
-    answers: { across: {}, down: {} },
     clueArrayAcross: puzzle.clues.across,
     clueArrayDown: puzzle.clues.down,
     clues: {
@@ -165,7 +174,10 @@ const puzzleMapper = (puzzle) => ({
         puzzle.clues.across,
         puzzle.answers.down,
         puzzle.clues.down
-    )
+    ),
+    memberIndexMap: { ...memberIndexMapTemp }
 });
+
+// exports.createPuzzleData = createPuzzleData;
 
 exports.puzzleMapper = puzzleMapper;

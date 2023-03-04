@@ -98,9 +98,16 @@ function GameRoom() {
         const increment =
             focusArea.direction === "across" ? 1 : board.size.cols;
         let newCoord = coord + increment;
+        let next = 0;
 
-        while (board.cells[newCoord].letter === ".") {
-            newCoord += increment;
+        if (board.cells[newCoord].letter !== ".") {
+            next = board.cells[newCoord][`${focusArea.direction}Next`];
+        }
+
+        if (board.cells[newCoord].letter === ".") {
+            // loop until you find the coords {direction}Next
+
+            newCoord = board.cells[newCoord][`${focusArea.direction}Next`];
         }
         return newCoord;
     }
