@@ -208,6 +208,19 @@ function GameRoom() {
         }
     }
 
+    function checkWin() {
+        let i = 0;
+        let result = true;
+
+        while (result && i < board.cells.length) {
+            if (board.cells[i].letter !== board.cells[i].guess) {
+                result = false;
+            }
+            i += 1;
+        }
+        return result ? alert("winner") : alert("almost");
+    }
+
     return (
         <div className="body">
             <div className="main">
@@ -223,6 +236,17 @@ function GameRoom() {
                     </div>
                     <div className="settings">
                         <span>Settings </span>
+                        <button
+                            type="button"
+                            onClick={
+                                focusArea.position > -1
+                                    ? () => checkWin()
+                                    : () => console.log("no")
+                            }
+                        >
+                            Check win
+                        </button>
+
                         <button
                             type="button"
                             onClick={
