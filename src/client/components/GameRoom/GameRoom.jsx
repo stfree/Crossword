@@ -99,7 +99,7 @@ function GameRoom() {
             focusArea.direction === "across" ? 1 : board.size.cols;
         let newCoord = coord + increment;
 
-        if (coord === board.cells.length) {
+        if (coord === board.cells.length - 1) {
             newCoord = 0;
         } else if (
             board.cells[newCoord] === undefined ||
