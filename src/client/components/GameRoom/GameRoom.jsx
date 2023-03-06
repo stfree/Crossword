@@ -105,6 +105,12 @@ function GameRoom() {
             processGuess(e, focusArea);
         }
 
+        if (e.key.toUpperCase() === "ALT") {
+            e.key = board.cells[focusArea.position].guess;
+            handleNextClick();
+            processGuess(e, focusArea);
+        }
+
         if (e.key === "ArrowUp") {
             arrowKeyChanges(e, -15);
         }
@@ -282,7 +288,10 @@ function GameRoom() {
         let result = true;
 
         while (result && i < board.cells.length) {
-            if (board.cells[i].letter !== board.cells[i].guess) {
+            if (
+                board.cells[i].letter !== "." &&
+                board.cells[i].letter !== board.cells[i].guess
+            ) {
                 result = false;
             }
             i += 1;
