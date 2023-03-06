@@ -50,28 +50,21 @@ function GameRoom() {
             e.key = "";
             processGuess(e, focusArea);
             const prev = prevPosition(focusArea.position);
-            const range =
-                focusArea.direction === "across"
-                    ? "acrossMember"
-                    : "downMember";
             setFocusArea({
                 ...focusArea,
                 position: prev,
-                range: board.cells[prev][range]
+                range: board.cells[prev][`${focusArea.direction}Member`]
             });
         }
 
         if (e.key.toUpperCase().match(/^[A-Z]$/)) {
             processGuess(e, focusArea);
             const next = nextPosition(board.cells[focusArea.position].index);
-            const range =
-                focusArea.direction === "across"
-                    ? "acrossMember"
-                    : "downMember";
+
             setFocusArea({
                 ...focusArea,
                 position: next,
-                range: board.cells[next][range]
+                range: board.cells[next][`${focusArea.direction}Member`]
             });
         }
 
