@@ -77,15 +77,25 @@ function GameRoom() {
 
         if (e.key.toUpperCase() === "TAB") {
             e.preventDefault();
+            const nextOrPrev = e.shiftKey ? "Prev" : "Next";
+
             e.key = board.cells[focusArea.position].guess;
 
-            // handleNextClick();
-
             const coord = board.cells[focusArea.position].index;
-            const next =
+            let next =
                 board.memberIndexMap[focusArea.direction][
-                    board.cells[coord][`${focusArea.direction}Next`]
+                    board.cells[coord][`${focusArea.direction}${nextOrPrev}`]
                 ];
+            if (next === undefined) {
+                if (board.cells[coord][`${focusArea.direction}Member`] === 1) {
+                    next =
+                        board.cells[board.cells.length - 1][
+                            `${focusArea.direction}Start`
+                        ];
+                } else {
+                    next = board.cells[0][`${focusArea.direction}Start`];
+                }
+            }
 
             setFocusArea({
                 ...focusArea,
