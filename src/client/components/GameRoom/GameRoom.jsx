@@ -78,86 +78,58 @@ function GameRoom() {
         if (e.key.toUpperCase() === "TAB") {
             e.preventDefault();
             e.key = board.cells[focusArea.position].guess;
+
+            // handleNextClick();
+
+            const coord = board.cells[focusArea.position].index;
+            const next =
+                board.memberIndexMap[focusArea.direction][
+                    board.cells[coord][`${focusArea.direction}Next`]
+                ];
+
+            setFocusArea({
+                ...focusArea,
+                position: next,
+                range: board.cells[next][`${focusArea.direction}Member`]
+            });
             processGuess(e, focusArea);
-            handleNextClick();
         }
 
         if (e.key === "ArrowUp") {
-            e.key = board.cells[focusArea.position].guess;
-            let next = focusArea.position - board.size.rows;
-
-            while (board.cells[next].letter === "." && next > 0) {
-                next -= board.size.rows;
-            }
-            if (next > -1) {
-                setFocusArea({
-                    ...focusArea,
-                    position: next,
-                    range: board.cells[next][`${focusArea.direction}Member`]
-                });
-                processGuess(e, focusArea);
-            }
+            arrowKeyChanges(e, -15);
         }
 
-        // TO DO: rewrite to combine up/down into one function that takes positive or negative vals to adjust next index
         if (e.key === "ArrowDown") {
-            e.key = board.cells[focusArea.position].guess;
-            let next = focusArea.position + board.size.rows;
-
-            while (
-                board.cells[next].letter === "." &&
-                next < board.cells.length
-            ) {
-                next += board.size.rows;
-            }
-            if (next < board.cells.length) {
-                setFocusArea({
-                    ...focusArea,
-                    position: next,
-                    range: board.cells[next][`${focusArea.direction}Member`]
-                });
-                processGuess(e, focusArea);
-            }
+            arrowKeyChanges(e, +15);
         }
 
         if (e.key === "ArrowRight") {
-            e.key = board.cells[focusArea.position].guess;
-            let next = focusArea.position + 1;
-
-            while (
-                board.cells[next].letter === "." &&
-                next < board.cells.length
-            ) {
-                next += 1;
-            }
-            if (next < board.cells.length) {
-                setFocusArea({
-                    ...focusArea,
-                    position: next,
-                    range: board.cells[next][`${focusArea.direction}Member`]
-                });
-                processGuess(e, focusArea);
-            }
+            arrowKeyChanges(e, 1);
         }
 
         if (e.key === "ArrowLeft") {
-            e.key = board.cells[focusArea.position].guess;
-            let next = focusArea.position - 1;
+            arrowKeyChanges(e, -1);
+        }
+    }
 
-            while (
-                board.cells[next].letter === "." &&
-                next < board.cells.length
-            ) {
-                next -= 1;
-            }
-            if (next > -1) {
-                setFocusArea({
-                    ...focusArea,
-                    position: next,
-                    range: board.cells[next][`${focusArea.direction}Member`]
-                });
-                processGuess(e, focusArea);
-            }
+    function arrowKeyChanges(e, n) {
+        e.key = board.cells[focusArea.position].guess;
+        let next = focusArea.position + n;
+
+        while (
+            board.cells[next].letter === "." &&
+            next < board.cells.length &&
+            next > -1
+        ) {
+            next += n;
+        }
+        if (next > -1 && next < board.cells.length) {
+            setFocusArea({
+                ...focusArea,
+                position: next,
+                range: board.cells[next][`${focusArea.direction}Member`]
+            });
+            processGuess(e, focusArea);
         }
     }
 
