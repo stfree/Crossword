@@ -262,9 +262,7 @@ function GameRoom() {
     function checkClue() {
         const newCells = board.cells.map((cell) => {
             if (cell[`${focusArea.direction}Member`] === focusArea.range) {
-                if (cell.guess === cell.letter) {
-                    cell.checked = true;
-                }
+                cell.checked = true;
             }
             return cell;
         });
@@ -277,7 +275,7 @@ function GameRoom() {
         const isChecked = board.cells[focusArea.position].checked;
 
         const newCells = board.cells.map((cell) => cell);
-        if (!isChecked && guess === letter) {
+        if (!isChecked) {
             newCells[focusArea.position].checked = true;
             setBoard({ ...board, cells: newCells });
         }
