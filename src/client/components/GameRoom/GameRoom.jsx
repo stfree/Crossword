@@ -159,31 +159,38 @@ function GameRoom() {
         let newCoord = coord + increment;
 
         if (coord === board.cells.length - 1) {
-            newCoord = 0;
-        } else if (
+            return 0;
+        }
+        if (
             board.cells[newCoord] === undefined ||
             board.cells[newCoord].letter === "."
         ) {
-            // find next index through indexMap
-            newCoord =
-                board.memberIndexMap[focusArea.direction][
-                    board.cells[coord][`${focusArea.direction}Next`]
-                ];
+            const next = board.cells[coord][`${focusArea.direction}Next`];
+            newCoord = board.memberIndexMap[focusArea.direction][next];
         }
         return newCoord;
     }
 
     function prevPosition(coord) {
-        const decrement =
+        const increment =
             focusArea.direction === "across" ? 1 : board.size.cols;
+        let newCoord = coord - increment;
 
-        let newCoord = coord - decrement;
-
-        if (coord <= 0) {
-            return 0;
+        if (coord === 0) {
+            return board.cells.length - 1;
         }
-        while (board.cells[newCoord].letter === ".") {
-            newCoord -= decrement;
+        if (
+            board.cells[newCoord] === undefined ||
+            board.cells[newCoord].letter === "."
+        ) {
+            const Prev = board.cells[coord][`${focusArea.direction}Prev`];
+
+            newCoord = board.memberIndexMap[focusArea.direction][Prev];
+
+            const Answer =
+                board.cells[newCoord][`${focusArea.direction}Answer`];
+
+            newCoord = newCoord + (Answer.length - 1) * increment;
         }
         return newCoord;
     }
