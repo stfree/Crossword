@@ -39,7 +39,8 @@ const populateMemberObject = (
     size,
     direction,
     answersArray,
-    cluesArray
+    cluesArray,
+    memberIndexMapTemp
 ) => {
     const answerIndex = clueMap[gridnum]?.index;
     const clue = clueMap[gridnum]?.clue;
@@ -67,7 +68,12 @@ const populateMemberObject = (
                 clueMap,
                 cluesArray
             );
-            updateMemberIndexMap(direction, gridnum, position[2]);
+            updateMemberIndexMap(
+                memberIndexMapTemp,
+                direction,
+                gridnum,
+                position[2]
+            );
         });
     }
 };
@@ -81,7 +87,8 @@ function generateCellsObjectArray(
     acrossAnswersArray,
     acrossCluesArray,
     downAnswersArray,
-    downCluesArray
+    downCluesArray,
+    memberIndexMapTemp
 ) {
     const row = (index) => Math.floor(index / size.rows);
     const column = (index) => index % size.rows;
@@ -117,7 +124,8 @@ function generateCellsObjectArray(
                 size,
                 "across",
                 acrossAnswersArray,
-                acrossCluesArray
+                acrossCluesArray,
+                memberIndexMapTemp
             );
 
             populateMemberObject(
@@ -128,7 +136,8 @@ function generateCellsObjectArray(
                 size,
                 "down",
                 downAnswersArray,
-                downCluesArray
+                downCluesArray,
+                memberIndexMapTemp
             );
         }
         return cell;
@@ -146,37 +155,52 @@ function clueMapper(clues) {
     }, {});
 }
 
-const memberIndexMapTemp = { across: {}, down: {} };
+// let memberIndexMapTemp = { across: {}, down: {} };
 
 // create { member : start index } table
-function updateMemberIndexMap(direction, member, startIndex) {
+function updateMemberIndexMap(
+    memberIndexMapTemp,
+    direction,
+    member,
+    startIndex
+) {
     if (member && memberIndexMapTemp[direction][member] === undefined) {
         memberIndexMapTemp[direction][member] = startIndex;
     }
 }
 
 // start here
-const puzzleMapper = (puzzle) => ({
-    size: puzzle.size,
-    clueArrayAcross: puzzle.clues.across,
-    clueArrayDown: puzzle.clues.down,
-    clues: {
-        across: clueMapper(puzzle.clues.across),
-        down: clueMapper(puzzle.clues.down)
-    },
-    cells: generateCellsObjectArray(
-        puzzle.grid,
-        puzzle.gridnums,
-        puzzle.size,
-        clueMapper(puzzle.clues.across), // repeating from 158?
-        clueMapper(puzzle.clues.down),
-        puzzle.answers.across,
-        puzzle.clues.across,
-        puzzle.answers.down,
-        puzzle.clues.down
-    ),
-    memberIndexMap: { ...memberIndexMapTemp }
-});
+const puzzleMapper = (puzzle) => {
+    const memberIndexMapTemp = { across: {}, down: {} };
+
+    return {
+        size: puzzle.size,
+        clueArrayAcross: puzzle.clues.across,
+        clueArrayDown: puzzle.clues.down,
+        clues: {
+            across: clueMapper(puzzle.clues.across),
+            down: clueMapper(puzzle.clues.down)
+        },
+        cells: generateCellsObjectArray(
+            puzzle.grid,
+            puzzle.gridnums,
+            puzzle.size,
+            clueMapper(puzzle.clues.across), // repeating from 158?
+            clueMapper(puzzle.clues.down),
+            puzzle.answers.across,
+            puzzle.clues.across,
+            puzzle.answers.down,
+            puzzle.clues.down,
+            memberIndexMapTemp
+        ),
+        memberIndexMap: {
+            across: { ...memberIndexMapTemp.across },
+            down: { ...memberIndexMapTemp.down }
+        }
+    };
+};
+
+// memberIndexMapTemp = { across: {}, down: {} };
 
 // exports.createPuzzleData = createPuzzleData;
 

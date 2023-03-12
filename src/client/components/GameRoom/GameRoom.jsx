@@ -13,8 +13,11 @@ function GameRoom() {
         direction: "across"
     });
 
+    // 1983-10-10 - original test
+    // 1994 " " works
+    // 1995 no work <-- took a pic
     useEffect(() => {
-        fetch("/createGame?date=1983-10-10")
+        fetch("/createGame?date=1994-10-10")
             .then((data) => {
                 if (data.status === 304 || data.status === 200) {
                     data.json().then(({ data }) => {
