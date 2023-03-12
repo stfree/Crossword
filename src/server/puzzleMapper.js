@@ -155,8 +155,6 @@ function clueMapper(clues) {
     }, {});
 }
 
-// let memberIndexMapTemp = { across: {}, down: {} };
-
 // create { member : start index } table
 function updateMemberIndexMap(
     memberIndexMapTemp,
@@ -174,6 +172,13 @@ const puzzleMapper = (puzzle) => {
     const memberIndexMapTemp = { across: {}, down: {} };
 
     return {
+        info: {
+            author: puzzle.author,
+            editor: puzzle.editor,
+            date: puzzle.date,
+            dow: puzzle.dow,
+            title: puzzle.title
+        },
         size: puzzle.size,
         clueArrayAcross: puzzle.clues.across,
         clueArrayDown: puzzle.clues.down,
@@ -199,9 +204,5 @@ const puzzleMapper = (puzzle) => {
         }
     };
 };
-
-// memberIndexMapTemp = { across: {}, down: {} };
-
-// exports.createPuzzleData = createPuzzleData;
 
 exports.puzzleMapper = puzzleMapper;
