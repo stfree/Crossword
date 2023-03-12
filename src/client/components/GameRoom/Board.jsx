@@ -8,6 +8,10 @@ function Board({
     changeFocus,
     onNewCell
 }) {
+    // viewBox 0 0 150 150
+    const cols = boardData.size.cols * 10;
+    const rows = boardData.size.rows * 10;
+    const viewBox = `0 0 ${cols} ${rows}`;
     return (
         <div
             tabIndex={0}
@@ -16,7 +20,7 @@ function Board({
                 registerGuess(e, focusArea); // callback function to update state in GameRoom
             }}
         >
-            <svg viewBox="0 0 150 150">
+            <svg viewBox={viewBox}>
                 {boardData.cells.map((cell) => (
                     <Cell
                         key={cell.index}
