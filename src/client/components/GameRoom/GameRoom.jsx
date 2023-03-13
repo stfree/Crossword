@@ -1,4 +1,5 @@
 import { React, useEffect, useCallback, useState } from "react";
+// import { useCallback, useEffect } from "react";
 import { NormalModuleReplacementPlugin } from "webpack";
 import "./App.css";
 import Board from "./Board";
@@ -7,7 +8,7 @@ import ClueList from "../ClueList/ClueList";
 // in the middle of removing clue/setClue state
 // need to move onNewCell up to gameRoom - add clue to focusArea or nah?
 
-function GameRoom() {
+function GameRoom({ date }) {
     const [board, setBoard] = useState([]);
     const [focusArea, setFocusArea] = useState({
         direction: "across"
@@ -17,7 +18,7 @@ function GameRoom() {
     // 1994 " " works
     // 1995 no work <-- took a pic
     useEffect(() => {
-        fetch("/createGame?date=1994-10-10")
+        fetch(`/createGame?date=${date.year}-${date.month}-${date.day} } `)
             .then((data) => {
                 if (data.status === 304 || data.status === 200) {
                     data.json().then(({ data }) => {
