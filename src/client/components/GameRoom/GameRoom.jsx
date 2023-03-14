@@ -101,6 +101,7 @@ function GameRoom() {
         }
 
         if (e.key.toUpperCase() === "ALT") {
+            e.preventDefault();
             e.key = board.cells[focusArea.position].guess;
             handleNextClick();
             processGuess(e, focusArea);
