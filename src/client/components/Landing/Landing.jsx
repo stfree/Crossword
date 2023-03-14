@@ -12,9 +12,14 @@ function Landing() {
     function handleSubmit(event) {
         event.preventDefault();
         const year = event.target.elements.pickyear.value;
-        const month = event.target.elements.pickmonth.value;
-        const day = event.target.elements.pickday.value;
+        const month = addLeading0s(event.target.elements.pickmonth.value);
+        const day = addLeading0s(event.target.elements.pickday.value);
         navigate(`Game/${year}-${month}-${day}`);
+    }
+
+    function addLeading0s(num) {
+        let newNum = num < 10 ? "0" + num : "" + num;
+        return newNum;
     }
 
     return (
@@ -38,7 +43,10 @@ function Landing() {
                     min="01"
                     max="12"
                     onChange={(e) => {
-                        setDate({ ...date, month: e.target.valueAsNumber });
+                        setDate({
+                            ...date,
+                            month: addLeading0s(e.target.value)
+                        });
                     }}
                 ></input>
                 Day:
@@ -47,8 +55,9 @@ function Landing() {
                     name="pickday"
                     min="01"
                     max="30"
+                    pattern="[0-9]*"
                     onChange={(e) => {
-                        setDate({ ...date, day: e.target.valueAsNumber });
+                        setDate({ ...date, day: addLeading0s(e.target.value) });
                         console.log(date);
                     }}
                 ></input>
@@ -56,7 +65,7 @@ function Landing() {
             </form>
             <div>
                 <Link to={`Game/${date.year}-${date.month}-${date.day}`}>
-                    Go To Game
+                    Go To Game Using State!
                 </Link>
             </div>
         </div>
