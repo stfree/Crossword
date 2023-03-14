@@ -5,59 +5,23 @@ import { createBrowserRouter, RouterProvider, Link } from "react-router-dom";
 import App from "./components/App";
 import "./main.css";
 import GameRoom from "./components/GameRoom/GameRoom";
+import Landing from "./components/Landing/Landing";
 
-let date = {
-    year: 1994,
-    month: 10,
-    day: 10
-};
+// let date = {
+//     year: 1994,
+//     month: 10,
+//     day: 10
+// };
 
-function getDate() {
-    return `Game/${date.year}-${date.month}-${date.day}`;
-}
+// function getDate() {
+//     const { year, month, day } = date;
+//     return `Game/${year}-${month}-${day}`;
+// }
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: (
-            <div>
-                <h1>Home Page</h1>
-                Year:
-                <input
-                    type="number"
-                    id="pickyear"
-                    min="1976"
-                    max="2015"
-                    onChange={(e) => {
-                        date.year = e.target.valueAsNumber;
-                    }}
-                ></input>
-                Month:
-                <input
-                    type="number"
-                    id="pickmonth"
-                    min="01"
-                    max="12"
-                    onChange={(e) => {
-                        date.month = e.target.valueAsNumber;
-                    }}
-                ></input>
-                Day:
-                <input
-                    type="number"
-                    id="pickday"
-                    min="01"
-                    max="30"
-                    onChange={(e) => {
-                        date.day = e.target.valueAsNumber;
-                        console.log(date);
-                    }}
-                ></input>
-                <div>
-                    <Link to={getDate()}>Go To Game</Link>
-                </div>
-            </div>
-        )
+        element: <Landing />
     },
     {
         path: "game/:date",
