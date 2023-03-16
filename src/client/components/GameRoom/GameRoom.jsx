@@ -46,11 +46,22 @@ function GameRoom() {
     }, [handleKeyboard]);
 
     function registerGuess(e, focusArea) {
-        console.log(e.key, focusArea);
+        console.log(board.cells[focusArea.position]);
+
+        const unlocked = !board.cells[focusArea.position].locked;
+        const checked = board.cells[focusArea.position].checked;
 
         if (e.key.toUpperCase() === "BACKSPACE") {
             e.key = "";
-            processGuess(e, focusArea);
+
+            if (unlocked && checked) {
+                removeChecked(focusArea);
+            }
+
+            if (unlocked) {
+                processGuess(e, focusArea);
+            }
+
             const prev = prevPosition(focusArea.position);
             setFocusArea({
                 ...focusArea,
@@ -59,8 +70,14 @@ function GameRoom() {
             });
         }
 
-        if (e.key.toUpperCase().match(/^[A-Z]$/)) {
-            processGuess(e, focusArea);
+        if (e.key.toUpperCase().match(/^[A-Z]$/) || e.key.match(/^[0-9]$/)) {
+            if (unlocked && checked) {
+                removeChecked(focusArea);
+            }
+
+            if (unlocked) {
+                processGuess(e, focusArea);
+            }
             const next = nextPosition(board.cells[focusArea.position].index);
 
             setFocusArea({
@@ -156,21 +173,33 @@ function GameRoom() {
         setBoard({ ...board, cells: newBoard });
     }
 
+    function removeChecked(focusArea) {
+        const newBoard = board.cells.map((cell, index) => {
+            if (index === focusArea.position) {
+                cell.checked = false;
+            }
+            return cell;
+        });
+        setBoard({ ...board, cells: newBoard });
+    }
+
     function nextPosition(coord) {
         const increment =
             focusArea.direction === "across" ? 1 : board.size.cols;
         let newCoord = coord + increment;
 
         if (coord === board.cells.length - 1) {
-            return 0;
-        }
-        if (
+            newCoord = nextPosition(0 - increment);
+        } else if (
             board.cells[newCoord] === undefined ||
             board.cells[newCoord].letter === "."
         ) {
             const next = board.cells[coord][`${focusArea.direction}Next`];
             newCoord = board.memberIndexMap[focusArea.direction][next];
+        } else if (board.cells[newCoord].locked) {
+            newCoord = nextPosition(newCoord);
         }
+
         return newCoord;
     }
 
@@ -286,11 +315,10 @@ function GameRoom() {
         const newCells = board.cells.map((cell) => cell);
         if (!isChecked) {
             newCells[focusArea.position].checked = true;
+            if (letter === guess) {
+                newCells[focusArea.position].locked = true;
+            }
             setBoard({ ...board, cells: newCells });
-        }
-
-        if (isChecked && letter === guess) {
-            newCells[focusArea.position].locked = true;
         }
     }
 
