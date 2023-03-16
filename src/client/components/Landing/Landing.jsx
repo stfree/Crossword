@@ -18,8 +18,12 @@ function Landing() {
     }
 
     function addLeading0s(num) {
-        let newNum = num < 10 ? "0" + num : "" + num;
+        const newNum = num < 10 ? "0" + num : "" + num;
         return newNum;
+    }
+
+    function getRandom(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     return (
@@ -30,6 +34,7 @@ function Landing() {
                 <input
                     type="number"
                     name="pickyear"
+                    value={getRandom(1976, 2015)}
                     min="1976"
                     max="2015"
                     onChange={(e) => {
@@ -40,6 +45,7 @@ function Landing() {
                 <input
                     type="number"
                     name="pickmonth"
+                    value={getRandom(1, 12)}
                     min="01"
                     max="12"
                     onChange={(e) => {
@@ -53,6 +59,7 @@ function Landing() {
                 <input
                     type="number"
                     name="pickday"
+                    value={getRandom(1, 30)}
                     min="01"
                     max="30"
                     pattern="[0-9]*"
