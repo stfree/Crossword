@@ -111,7 +111,8 @@ function generateCellsObjectArray(
         acrossPrev: null,
         downPrev: null,
         acrossNext: null,
-        downNext: null
+        downNext: null,
+        locked: false
     }));
 
     return cells.map((cell, index) => {

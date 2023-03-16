@@ -256,6 +256,9 @@ function GameRoom() {
         const newCells = board.cells.map((cell) => {
             if (cell.guess === cell.letter) {
                 cell.checked = true;
+                if (cell.letter === cell.guess) {
+                    cell.locked = true;
+                }
             }
             return cell;
         });
@@ -266,6 +269,9 @@ function GameRoom() {
         const newCells = board.cells.map((cell) => {
             if (cell[`${focusArea.direction}Member`] === focusArea.range) {
                 cell.checked = true;
+                if (cell.letter === cell.guess) {
+                    cell.locked = true;
+                }
             }
             return cell;
         });
@@ -273,14 +279,18 @@ function GameRoom() {
     }
 
     function checkCell() {
-        const guess = board.cells[focusArea.position].guess;
         const letter = board.cells[focusArea.position].letter;
+        const guess = board.cells[focusArea.position].guess;
         const isChecked = board.cells[focusArea.position].checked;
 
         const newCells = board.cells.map((cell) => cell);
         if (!isChecked) {
             newCells[focusArea.position].checked = true;
             setBoard({ ...board, cells: newCells });
+        }
+
+        if (isChecked && letter === guess) {
+            newCells[focusArea.position].locked = true;
         }
     }
 
